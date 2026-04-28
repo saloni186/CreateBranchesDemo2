@@ -1,0 +1,32 @@
+Logging in springboot application :-
+----------------------------------
+logging frameworks :- log4j
+		      slf4j(simple logging facade 4 java)
+
+Logging:-
+--------- logging is the proccess of recording the events, errors, flow of fexecution , messages , which are generaed by an application
+logging helps us ->
+-------------------
+		1)debbuging the application
+		2)trace the flow of execution
+		3) trace the performation of the application
+		4)monitering application
+
+-> in real time application we naver ever use syso in place of sysout we use Loggore and it gives us more inforamation
+0> by defualt springboot entgrated with logging framework :slf4j
+-> logger levels :-info, debug, error, warn,trace
+-> defualt log level is INFO
+->to print the debug log we have to set debug log level
+-> warn :- going for better aproch
+-> error will block or fail orinterrupt the prossece
+-> debug :- every time not requried , but required specific scanerios ,that information we can write in debug
+-> enable log :- loging.level.root=debug
+-> * represents which package level we are enabling the log
+-> root:- all package level java.**,org.**,com.thrivesuP.**
+-> spescific for spring framework :- logging.level.org.springframework=debug
+-> store logs history :-logging.file.name=logs/app.log
+->drawbacks :-
+1-> dont log sensitive information like :- credentials
+2-> do not add too much log becase it  decease our application performance
+
+

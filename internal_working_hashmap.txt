@@ -1,0 +1,23 @@
+internal working of hashMap :-When we insert a key-value pair, HashMap first computes the hash code of the key.
+
+Then it calculates the index in the array using this hash.
+
+If the bucket is empty, it inserts the entry.
+
+If there’s a collision (another key already exists in that bucket), it adds the entry to a linked list (or tree in Java 8+ if the list grows too long).
+__________________________________________________________________________________________________________________________________________________________________
+
+SOLID Principles – Simple Definition (Interview Ready)
+
+“SOLID is a set of five design principles in object-oriented programming that help us write code which is clean, maintainable, scalable, and easy to understand.”
+
+S – Single Responsibility Principle: A class should do one thing only.
+
+O – Open/Closed Principle: Classes should be open for extension, closed for modification.
+
+L – Liskov Substitution Principle: Subtypes must be replaceable for their base types without breaking code.
+
+I – Interface Segregation Principle: Don’t force clients to depend on methods they don’t use.
+
+D – Dependency Inversion Principle: High-level modules should depend on abstractions, not concrete implementations
+_____________________________________________________________________________________________________________________________________________________________

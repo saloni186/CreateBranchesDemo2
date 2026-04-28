@@ -1,0 +1,42 @@
+					Design patterns
+
+-> desidn patterns provide best solution of commonly occure problem in our software design
+
+Singleton desing pattern break :
+1) by using refelctio API :-
+solution :- 1)if object is aleady their then thows exception in side contructor
+	    2)Enum
+	    3) by deserialization
+	    4) by cloning
+______________________________________________________________________________________________________________
+
+Factory (method )design pattern :-
+-----------------------when there is superclass and multiple child classes and we want to get the object of child classes based on input and requrinmentthen we create factory class which take the responsibility to crete object based on input
+
+advantages:-
+1) focusing on create object rather then implementation
+2) loose coupling
+__________________________________________________________________________________________________________
+
+abstract factroty design pattern :-
+------------------------------------
+
+it is similer to factory 
+but it provide the concept of factory of factory.
+________________________________________________________________________________________________________
+
+Builder design pattern :-
+------------------------it is mainly use for immutable objects
+________________________________________________________________________________________________________________________________
+
+Prototype desogn pattern :-
+--------------------------
+
+the concept is to copy an existing object rather then create a new object from scratch. beacause creating the new object may be costly and time consuming  os this aproch saves cost and time when object creating is heavy proccess like : database conection newwork connection.
+____________________________________________________________________________________________________________________________________________________________
+
+Observer design paturn :-
+------------------------ when subject is chang the state of all its dependent objects notifieds its changes. 
+
+
+		

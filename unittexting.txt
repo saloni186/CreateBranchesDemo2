@@ -1,0 +1,95 @@
+						Unit Testing
+
+
+what is unit Testing ?
+Ans :-unit testing is a type of software testing which is used to test a perticuler unit or componet.it twat the code is perform as expacted 
+unit testing isolate the section of the code and check its correctness.
+->A unit may be a method, fuction, precedure, module, object.
+->there are two types of testing :-
+1) manual testing(by debugging)
+2) automated testing(by using j unit) 
+
+-> Junit :- junit is the free open source, light weighted  unit testing framework for java application.
+-> current version of Junit is 5.
+
+advantesc :-find bugs easily,resove the bug
+
+_________________________________________________________________________________________________________
+
+Junit 5:-
+
+3 models :
+junit plateform : it provides environment
+junit jupiter : it give some annotaions
+junit vintage : it provides backword competiblity(we can use junit 3 and junit4 annotaion in 5 also)
+
+Annotations :-
+@Test
+@BeforeEach
+@AfterEach
+@BeforeAll
+@AfterAll
+@ParameterizedTest :you can put diff.inputs
+for Parameterized testing
+@ValueSource :- provides source of inputes
+@CsvSource :- provide inputs from csv
+@CsvFileSource :-provide inputs from CSV file
+@MethodSource
+@RepeatedTest : execute same  method multiple times
+@Disable :- desable the method
+
+
+assertions : validate expexted ouput with actual output
+
+assertion methods :-
+------------------
+
+assertEquals and assertNotEqualsf 
+assertTrue assertFalse
+assertNull assertNotNull
+assrtSame,assertNotSame
+assertThrows
+_____________________________________________________________________________________________________________________________
+
+what is mocking ?
+ans : if you want to test endividual component in the isolation mannerthen we use mocking
+				OR
+to perform isolated testing we should go for mocking
+-> createing a dummy objetc of original object and handle its behavior
+-> whe it is requried :- when other extranal class depence on our unit testing class so to make that dependecy dummy we make it mock
+
+-> there are two types of moking frameworks are available  for mocking :-
+
+1) stub based mock framework(ease moke)
+2) bytecode manupulation based mock framework.(power moke) :- it suuports fianl methods and final classes
+
+	how to create dummy object :-UserDao userDao=PowerMokito.mock(UserDao.class)
+				     PowerMockito.when(UserDao).fineNameById(101).thenReturn("nick");
+	to call private mathod we use spy : PowerMovkito.spy(service);
+
+note  :- if we want to call real DAO method then we use a method thenCallRealMethod()
+							     PowerMockito.when(UserDao).fineNameById(101).thenCallRealMethod();
+
+Question:- how to mock a method which return void ?
+Ans :-PowerMockito.doNothing
+_____________________________________________________________________________________________________________________________
+
+spring boot unit testing  with code coverage(jacoco):-
+-----------------------------------------------------------
+
+test support i sprovided by two modul :
+
+1)spring boot test(core item available)
+2) spring - boot -test - autoconfiguration
+
+@WebMvcTest:- represent the unit testig for web mvc method
+@MockBean:- create the dumy object of real dependencive objetc
+@Autowired
+MockMvc :- it is responsible for sent request to our rest api from test method
+MockMvcRequestBuilder :- is used to create the request
+
+
+
+
+
+

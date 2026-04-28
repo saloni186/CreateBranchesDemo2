@@ -1,0 +1,76 @@
+							Microservices
+
+-> microservice is an architchtures style. where we build our application  as collection of small independet services that communicate with each other via API's
+
+-> mono vs micro :-
+  ----------------
+
+1) deployment :
+	mono :- easy
+	micro :- dificult
+
+2)scalability
+3)technology
+	mono:- single or one or more tech
+	micro :- we can use multiple technology for multiple modules
+
+dis advantages :- costly
+	          use more resources
+____________________________________________________________________________________________________________________________
+
+implementaion of micro services :-
+----------------------------------   
+	
+		to impl, configure manage, motitor -> we need to use some component
+-> to support all micro services spring boot provides a cloud library.
+-> what is the difference between springboot and spring cloud ?
+Ans :-for implwmwntation requirment  as an application all fundamentals and spring libraries are provided by spring boot 
+-> spring cloud is the part of Spring boot
+-> by using spring cloud library we can create manage configure , moniter cloud based application. 
+
+   balance=
+
+API GATWAY :-API gatway is the component / application which is the primry contact to any request which is comming from any client
+------------
+
+-> it perform routing configuration :- sent the request to appropriat handler(Spring bbot api)
+-> it centralizing the all request and response proccess and also entralizssecurity configuration(routing +filtering)
+
+API getway implementation :-
+----------------------------
+1. add stater of getway
+2. configuration of routing of all microservices
+	1. programetically :@Bean Object
+	2.properties level declaratively
+3.application .properties file :gatway application
+	1. adding routing inforamtion of user service
+	micro service routing
+	-> provide context-path, port number
+___________________________________________________________________________________________________________________________________
+
+service registary and descovery :-
+----------------------------------service registary is the centralized registery of all micro services.it collect inforamation of all the microservices  and maintan .
+-> we have to add urecka server dependency
+-> enable Euereka server in spring boot main application @EnableEurekaSevice
+-> you must defone port number as server.port=8761
+-> once service registary started it will always started with default UI PORTAL
+-> fo implementing service registary we have Eureka claint provided by netflix.
+-> by default service registary register itself an discovery client, in this case we have to stop this defualt behavior
+-> by default our micro services not regiater with Eureka servcer
+-> to make our micro services as discoverable client for service registery we have to add dependency Eureka client(Eureka discovery client) provided by netflix. as well as we have to enable a annotation on each micro service level (@EnableDicoveryClient)
+-> we have to add service registary url in our micro services(eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+)
+
+Dynamic routing :-
+-----------------
+-> acive dinamic routing we have to also make API Gateway as discovery client
+-> add an extra property in GatWay applicaition
+	spring.cloud.gateway.discovery.locator.enabled=true
+
+-> we have to pass the url in this syntax :
+			localhost://8888/USER-SERVICE/user/create
+-> by default service registary alway take user-id in uppper case
+
+ 
+
+		

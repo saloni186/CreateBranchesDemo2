@@ -1,0 +1,310 @@
+which tool you will use to monitor application in your current project
+Ans :-
+
+Question :-JWT token ?
+JWT (JSON Web Token) is a secure way to authenticate users where, after login, the server gives a token to the client, and this token is used to access protected APIs without maintaining any session on the server.
+
+🛠️ How We Implemented JWT Authentication (Simple Process)
+1. User Login
+
+User sends username and password to the login API.
+
+We validate credentials using Spring Security and encrypted passwords.
+
+2. Token Generation
+
+If credentials are valid, the server generates a JWT token.
+
+The token contains:
+
+Username
+
+Roles
+
+Expiry time
+
+Token is signed using a secret key.
+
+3. Token Sent to Client
+
+The JWT token is sent back to the client.
+
+Client stores the token (usually in memory or local storage).
+
+4. Token Sent with Every Request
+
+For each API request, the client sends the token in the Authorization header.
+
+Authorization: Bearer <token>
+
+5. Token Validation
+
+A JWT filter runs before every request.
+
+It:
+
+Extracts the token
+
+Validates signature and expiry
+
+Gets user details from the token
+
+6. Access Granted
+
+If the token is valid, the user is authenticated.
+
+Spring Security allows access to protected APIs.
+
+No session is stored → stateless authentication.
+
+🎯 Final Interview One-Liner
+
+“We implemented JWT authentication by validating user credentials, generating a signed JWT token, and validating that token on every request using a filter, which allows secure and stateless access to APIs.”
+
+
+If you want, I can:
+
+Make this sound more experienced.
+________________________________________________________________________________________________________________________________________________________________
+
+difference between stored proccedor and function :-
+Here’s a clear comparison between Stored Procedures and Functions in a database:
+
+Feature	Stored Procedure	Function
+Purpose	Performs a set of operations, can include business logic, data modification, or complex tasks	Returns a single value or a table and is primarily used for computations
+Return Value	May return zero, one, or multiple values using OUT parameters or result sets	Must return a value using RETURN statement
+Usage in SQL	Can be called using EXEC or CALL statements	Can be used directly in SELECT, WHERE, or other SQL statements
+Side Effects	Can modify data (INSERT, UPDATE, DELETE)	Generally cannot modify data (read-only operations in many DBMS)
+Parameters	Can have IN, OUT, INOUT parameters	Typically only IN parameters
+Transaction Control	Can contain transaction control statements like COMMIT or ROLLBACK	Usually cannot handle transactions
+Execution Context	Executed as a separate call, may return multiple result sets	Executed as part of a query, returns a single value or table
+___________________________________________________________________________________________________________________________________________________________
+
+
+							Project round
+1)Serialization
+
+Serialization is the process of converting an in-memory object (like a class instance, record, or data structure) into a byte stream or string format so that it can be:
+
+Stored in files or databases
+
+Sent over a network
+
+Shared between systems or processes
+
+Deserialization is the reverse process: converting the byte stream back into a usable object.
+___________________________________________________________________________________________________________________________________________
+
+@Transient annotation :-Purpose
+
+Sometimes, an entity class may have fields used only in memory or for temporary calculations, which you don’t want stored in the database.
+
+@Transient tells JPA to ignore that field when performing database operations.
+Only fields or properties can be annotated.
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
+@Entity
+public class Employee {
+
+    @Id
+    private int id;
+    private String name;
+
+    @Transient
+    private int tempCalculation; // This will NOT be persisted
+
+    // getters and setters
+}
+________________________________________________________________________________________________________________________________________
+
+internal working of HashMap ?
+Ans :- 
+1)HashMap holds data in key and value pair
+2) use hash function and decide where each key and value pair should be place in the memory
+3)when we put a key java calculates the hashcode for that key and palce the value in specific bucket like in array
+4)if the two keys and endup with same bucket this is called colision 
+5)hashmap holds them in likedlist or balanced tree for better perfformance
+6)when we search for key it again compute the hash and directly goes to the that bucket to find the matching key 
+7) making lookup and insert operation very fast almost o(n)
+8) so hashmap is efficient and because it does not search anywhere it jups directly to the right location using hashcodes 
+____________________________________________________________________________________________________________________________________________
+
+class loading proccess :-“The class loading process in Java consists of Loading, Linking, and Initialization, where the JVM loads bytecode, verifies and prepares it, and finally executes static initialization code.”
+_______________________________________________________________________________________________________________________________________________________________
+
+how does a HashSet ensure uniqueness internally ?
+Ans :-HashSet ensures uniqueness by internally using a HashMap.
+When you add an element to a HashSet, it uses the hash code and equals() method to make sure duplicate elements are not stored.
+___________________________________________________________________________________________________________________________________________________________
+
+what happend if you dont override hashCode method properly ?
+If hashCode() is not overridden consistently with equals(), hash-based collections like HashMap, HashSet, HashTable will not work correctly, and objects that are logically equal may be treated as different, leading to duplicate entries or lookup failures.
+_______________________________________________________________________________________________________________________________________________
+
+how would you get a return  value from thread ?
+_____________________________________________________________________________________________________________________________________________________________
+ How does ThreadPoolExecutor manage threads internally
+ThreadPoolExecutor manages threads using a core pool, maximum pool, task queue, and rejection policy to efficiently execute and reuse threads.
+
+what happed if all threads are busy ?
+If all threads are busy, the task is either queued, a new thread is created (if allowed), or the task is rejected, depending on the thread pool configuration.
+_____________________________________________________________________________________________________________________________________________________________
+
+you have 100 tasks but only 100 tasks are available how will you execute all efficiently ?
+Ans :-I would use a thread pool (ExecutorService) with an optimal number of threads so tasks are queued and executed efficiently without creating 100 threads.
+___________________________________________________________________________________________________________________________________________________________
+
+what happend behined the scanes when execution spring boot application
+Ans :-When a Spring Boot application starts, JVM initializes, SpringApplication prepares the environment, creates the ApplicationContext, loads beans via component scanning and auto-configuration, starts the embedded server, injects dependencies, and finally makes the application ready to serve requests.
+_________________________________________________________________________________________________________________
+
+how auto configuration works internally ?
+Ans :-Spring Boot auto-configuration works by loading predefined configuration classes from metadata files and conditionally creating beans based on classpath, properties, and existing beans.
+____________________________________________________________________________________________________________________________________________________________
+
+how to secure rest api in spring boot application ?
+Ans :-High-Level Flow (Very Important)
+
+Client sends username & password
+
+Server validates credentials
+
+Server generates JWT token
+
+Client sends token in every request:
+
+Authorization: Bearer <token>
+
+
+Spring Security validates token
+
+API is accessed
+We secure REST APIs in Spring Boot using Spring Security with JWT-based authentication, stateless session management, security filter chains, and role-based authorization.
+_______________________________________________________________________________________________________________________________________________________________
+
+how would you implemants role based access ?
+Ans :-*"In a Spring Boot application, role-based access is usually implemented using Spring Security. First, we define roles either as an enum or in the database. Then, we assign roles to users and map them to GrantedAuthority in a UserDetails implementation.
+
+For enforcing access, we can use:
+
+Method-level security with @PreAuthorize or @Secured annotations, e.g., @PreAuthorize("hasRole('ADMIN')") for admin-only methods.
+
+URL-level security in the security configuration using HttpSecurity, specifying which roles can access which endpoints.
+
+At runtime, Spring Security checks the logged-in user's roles against the required roles for the endpoint or method and allows or denies access accordingly. This way, only users with the correct roles can access protected resources."*
+___________________________________________________________________________________________________________________________________________________________
+
+what are the key standard when developing an Api ?
+Ans :-key standards are folows
+1) using clear endpoints
+2)properHttp method
+3) consistance naming
+4)authentication 
+5) authorization
+6) vesoning
+7)meaning full  status code
+8)pagination
+9)errror handling
+10)good documentaion
+_____________________________________________________________________________________________________________________________________________________
+
+what is sql injection ?
+Ans :-SQL Injection is a security vulnerability where an attacker inserts malicious SQL code into an input field to manipulate or access the database without authorization.
+how to prvent it :1. Use Prepared Statements
+		  2.2. Use ORM Frameworks
+		  3. Input Validation
+		  4.Avoid Dynamic Queries
+______________________________________________________________________________________________________________________________________________________________
+
+what are the http 300 series codes ?
+Ans :-“HTTP 300 series status codes represent redirection.
+They tell the client that the requested resource has moved or can be retrieved from another location.
+Common ones are 301 for permanent redirect, 302 for temporary redirect, and 304 for cache validation.
+________________________________________________________________________________________________________________________________________________________________
+
+expain few design pattern thaat is used in core java ?
+Ans : singletone desing pattern :
+      2) Factory Pattern :-Creates objects without exposing the creation logic to the client.
+	Loose coupling,Loose coupling
+
+	Easy to add new implementations
+
+      3)Builder Pattern:Used to create complex objects step by step.
+
+4)DAO Pattern :-Separates database access logic from business logic.
+5)MVC Pattern :-Separates application into Model, View, and Controller.
+
+❓ “Which design pattern did you use in your project?”
+Ans :-We used Singleton for configuration and logging, Factory for payment and notification handling, Builder for DTO creation, DAO/JPA repositories for database access, and Observer-like behavior for bid notifications.”
+_______________________________________________________________________________________________________________________________________________________________
+
+how do we optimize singletoe desing pattern ?
+Ans :-Singleton optimization focuses on thread safety and performance.
+The best approaches are static inner class for lazy loading with zero synchronization overhead, and enum-based singleton which also handles serialization and reflection issues.”
+______________________________________________________________________________________________________________________________________________________________
+
+what is @Transactional and what are the isolation level ?
+Ans :-Isolation Levels :-Isolation levels define how much one transaction is isolated from anothe
+1) READ_UNCOMMITTED :Transaction can read uncommitted data from other transactions
+2)READ_COMMITTED :Can read only committed data
+3)REPEATABLE_READ :Same data read multiple times gives same result
+4)SERIALIZABLE:-Transactions execute one after another	
+How to Use Isolation Level
+@Transactional(isolation = Isolation.SERIALIZABLE)
+public void updateBalance() {
+    // business logic
+}
+________________________________________________________________________________________________________________________________________________________
+0
+how to configure spring boot to use as external cache ?
+Ans :-“Spring Boot can be configured with an external cache like Redis using spring-boot-starter-cache and spring-boot-starter-data-redis.
+We enable caching with @EnableCaching and use annotations like @Cacheable, @CachePut, and @CacheEvict to manage cached data.”
+________________________________________________________________________________________________________________________________________________________
+
+How to implement API versoning in Spring boot ?
+Ans  :-	 API versioning in Spring Boot can be implemented using URI path, request parameters, headers, or media types.
+The most commonly used approach is URI-based versioning like /api/v1 and /api/v2 because it is simple and explicit.”
+___________________________________________________________________________________________________________________________________________________________
+
+How to secure sensitive imforamtion in spring boot ?
+Ans :-  Sensitive information in Spring Boot is secured using environment variables, encrypted configuration, secret management tools, Spring Security for authentication and authorization, HTTPS for data in transit, and hashing or encryption for data at rest.”
+
+
+
+secret management tools ?
+Use External Secret Management Tools ⭐⭐⭐ (BEST PRACTICE)
+Common Tools:
+
+HashiCorp Vault
+
+AWS Secrets Manager
+
+Azure Key Vault
+
+GCP Secret Manager
+____________________________________________________________________________________________________________________________________________________________
+
+what are the factors to considers  when choosing collection for sorting ?
+Ans :-“When choosing a collection for sorting, we consider the type of collection, data size, sorting frequency, performance, memory usage, duplicate handling, ordering requirements, and concurrency needs.
+ArrayList is commonly used for sorting due to fast random access, while TreeSet or TreeMap is used when sorted order must be maintained continuously.”
+_______________________________________________________________________________________________________________________________________________________________
+
+how to handle csrf in mvcapplication ?
+Ans :-“In a Spring MVC application, CSRF is handled using Spring Security’s built-in CSRF protection.
+A CSRF token is generated and validated for all state-changing requests.
+The token is added to forms or sent in headers for AJAX requests.
+For stateless REST APIs using JWT, CSRF protection is usually disabled.”
+___________________________________________________________________________________________________________________________________________________________
+
+what is @Transactional annotation and what happens if you call a transactional method from non transactional one ?
+Ans :-@Transactional manages database transactions using Spring AOP proxies. If a transactional method is called from a non-transactional method in another Spring bean, the transaction will start normally. However, if it is called within the same class (self-invocation), the transaction will not be applied because the proxy is bypassed.
+__________________________________________________________________________________________________________________________________________________________
+
+
+
+
+
+

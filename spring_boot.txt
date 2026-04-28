@@ -1,0 +1,247 @@
+1. What are the benefits of using Spring Boot?
+
+Answer:
+Spring Boot reduces configuration and boilerplate code. It provides auto-configuration, embedded servers (Tomcat), and easy dependency management. It helps build production-ready REST APIs faster with built-in support for security, JPA, and monitoring.
+
+2. How does Spring Security work? How do you implement authentication and authorization?
+
+Answer:
+Spring Security works using filters that intercept requests. Authentication verifies the user, and authorization checks user roles/permissions. I have implemented JWT-based authentication using a custom filter.
+
+3. What is Hibernate ORM and why do you use it?
+
+Answer:
+Hibernate is an ORM tool that maps Java objects to database tables. It reduces manual SQL, supports CRUD operations, caching, lazy loading, and improves productivity. It also helps write database-independent code.
+
+4. Difference between Spring MVC and Spring Boot?
+
+Answer:
+Spring MVC is a framework for building web applications. Spring Boot is built on top of Spring and simplifies configuration by providing auto-configuration, embedded servers, and opinionated defaults.
+
+5. How do you handle transactions in Spring?
+
+Answer:
+I use declarative transaction management with @Transactional. Spring automatically commits the transaction if the method succeeds and rolls it back if an exception occurs.
+
+6. What is REST and RESTful API?
+
+Answer:
+REST is an architectural style that uses HTTP methods like GET, POST, PUT, DELETE. RESTful APIs are stateless, use JSON, and follow proper HTTP status codes.
+
+7. What is JWT and why is it used?
+
+Answer:
+JWT is a token-based authentication mechanism. It is stateless, secure, and suitable for microservices. It avoids server-side sessions and improves scalability.
+
+8. Difference between @Component, @Service, and @Repository?
+
+Answer:
+All are Spring stereotypes.
+
+@Component – generic
+
+@Service – business logic
+
+@Repository – DAO layer, also handles DB exceptions
+
+9. What is lazy loading in Hibernate?
+
+Answer:
+Lazy loading means related data is loaded only when it is accessed, improving performance and reducing unnecessary database queries.
+
+10. How do you handle exceptions in Spring Boot?
+
+Answer:
+I use @ControllerAdvice with @ExceptionHandler to handle global exceptions and return meaningful error responses.
+
+✅ Non-Technical (Behavioral) Questions
+1. How do you ensure maintainability and scalability?
+
+Answer:
+I write clean, modular code, follow SOLID principles, and use layered architecture. For scalability, I design stateless services, use caching, and optimize database queries.
+
+2. How do you handle tight deadlines?
+
+Answer:
+I prioritize critical tasks, break work into smaller pieces, collaborate with the team, and communicate risks early to stakeholders.
+
+3. How do you work with frontend and QA teams?
+
+Answer:
+I share clear API contracts, use Swagger for documentation, and support QA by fixing bugs quickly and writing unit tests.
+
+4. How do you handle team conflicts?
+
+Answer:
+I listen to all perspectives, focus on facts, and work toward a solution aligned with project goals.
+
+5. How do you ensure data security?
+
+Answer:
+I use HTTPS, JWT authentication, role-based access control, password encryption, and input validation to protect sensitive data.
+
+___________________________________________________________________________________________________________________________________
+
+Difference between HashMap and ConcurrentHashMap?
+
+Answer:
+HashMap is not thread-safe and allows one null key. ConcurrentHashMap is thread-safe and allows concurrent read/write operations without locking the entire map.
+
+2. What is Java Stream API?
+
+Answer:
+Stream API allows processing collections in a functional style using operations like filter, map, and reduce. It improves code readability and supports parallel execution.
+
+3. Difference between == and .equals()?
+
+Answer:
+== compares object references, while .equals() compares object values.
+
+4. What is immutability? Why is String immutable?
+
+Answer:
+Immutable objects cannot be changed after creation. String is immutable for security, caching, and thread safety.
+
+5. What is Optional in Java?
+
+Answer:
+Optional is a container object used to avoid NullPointerException by explicitly handling null values.
+
+🔥 Spring Boot
+6. How does Spring Boot auto-configuration work?
+
+Answer:
+Spring Boot auto-configuration uses classpath scanning and conditional annotations to configure beans automatically based on dependencies.
+
+7. Difference between @Component, @Service, @Repository?
+
+Answer:
+All create Spring beans. @Service is for business logic, @Repository handles database operations and exceptions.
+
+8. What are Spring Boot Actuators?
+
+Answer:
+Actuators provide production-ready endpoints to monitor health, metrics, and application status.
+
+9. Difference between @Autowired and constructor injection?
+
+Answer:
+Constructor injection is recommended because it ensures immutability and easier unit testing.
+
+10. How do you handle configuration for different environments?
+
+Answer:
+Using Spring Profiles and application-{profile}.yml files.
+
+🔥 Spring Security
+11. How do you secure REST APIs?
+
+Answer:
+Using JWT authentication, HTTPS, role-based access control, and Spring Security filters.
+
+12. Difference between Authentication and Authorization?
+
+Answer:
+Authentication verifies who the user is. Authorization checks what the user is allowed to access.
+
+13. What is JWT and why use it?
+
+Answer:
+JWT is a stateless token used for secure authentication. It improves scalability and avoids server-side sessions.
+
+🔥 Hibernate / JPA
+14. What is the N+1 problem?
+
+Answer:
+It occurs when Hibernate executes one query to fetch parent records and N additional queries for child records. It can be solved using fetch joins.
+
+15. Difference between Lazy and Eager fetching?
+
+Answer:
+Lazy loads data only when needed. Eager loads data immediately.
+
+16. What is @Transactional?
+
+Answer:
+It manages database transactions automatically and rolls back in case of exceptions.
+
+17. Difference between save() and saveAndFlush()?
+
+Answer:
+save() persists data later, while saveAndFlush() immediately writes to the database.
+
+🔥 REST API
+18. Difference between PUT and PATCH?
+
+Answer:
+PUT updates the entire resource. PATCH updates partial fields.
+
+19. How do you handle exceptions globally?
+
+Answer:
+Using @ControllerAdvice and @ExceptionHandler.
+
+20. What HTTP status codes do you commonly use?
+
+Answer:
+200 OK, 201 Created, 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 500 Internal Server Error.
+
+🔥 Microservices
+21. Monolithic vs Microservices?
+
+Answer:
+Monolithic is a single deployable unit. Microservices are independent services that scale and deploy separately.
+
+22. How do microservices communicate?
+
+Answer:
+Using REST APIs, messaging queues, or event-driven communication.
+
+23. What is service discovery?
+
+Answer:
+It allows services to dynamically find each other using tools like Eureka.
+
+🔥 Performance & Debugging
+24. How do you improve API performance?
+
+Answer:
+By using caching, database indexing, pagination, and reducing unnecessary queries.
+
+25. How do you handle large data sets?
+
+Answer:
+Using pagination, streaming responses, and batch processing.
+
+26. What will you do if production is down?
+
+Answer:
+Check logs, monitor metrics, identify root cause, rollback if needed, and communicate with stakeholders.
+
+🔥 Testing
+27. Difference between Unit Testing and Integration Testing?
+
+Answer:
+Unit testing tests individual components. Integration testing checks interaction between components.
+
+28. What tools do you use for testing?
+
+Answer:
+JUnit, Mockito, Spring Test, Postman.
+
+🔥 Behavioral (HR)
+29. How do you handle pressure?
+
+Answer:
+By prioritizing tasks, staying calm, and communicating clearly with the team.
+
+30. Why should we hire you?
+
+Answer:
+I have strong hands-on experience in Java, Spring Boot, and REST APIs, and I focus on writing clean, scalable, and secure code.
+
+✅ Interview Tip
+
+Keep answers clear, practical, and confident. Interviewers prefer real experience over theory.
+
+If you wa

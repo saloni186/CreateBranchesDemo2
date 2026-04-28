@@ -1,0 +1,541 @@
+							Rest API / Services
+
+web services :-
+--------------- web services is the concept of enabling communication between web applications.
+
+there are two types of web services -
+1.SOAP services :-simple object access protocol
+-----------------
+		the SOAP services concept completely based on xml
+		SOAP is not built on the Http protocol beacause SOAP services have its own protocol 
+		Httpapp1<->SOAP<->Http app2 this convertion takes more time
+		it make our application heavy weighted 
+		as developer we have to face many complexity as developer
+
+
+
+2.REST services :-
+-----------------Representational state stransfer 
+		 Rest is a architechtural style by using Http protocol	
+		any programming language web services can communicate with each other with the help of Rest services 
+		Rest api/ services :- we can exchange data with JSON/XML formate 
+
+xml vs JSON :-
+--------------JSON(performance is well, it is more readable then xml, it takes less memory) in light weighted comparing with XML
+
+JSON :-java script object notation.it is andividual data formate like XML.
+__________________________________________________________________________________________________________
+
+				 			part-61
+producer :-
+----------- an application which are produced/ created/ implemented REST services in called as producer.
+
+consumer :-
+----------- an application which are calling / consuming web services(from producer) are called consumer.
+
+REST api by using spring boot :-
+--------------------------------
+
+jax-Rs
+Quarkus
+SB
+Python
+.net
+
+3 :-
+---------------- annotation that indicates a method return value should be bound to the web response body,
+		 supported for wen handler method(@RequestBody)
+we we want to make handle mapping / request mappinng as Rest service endpoint, we have to declare with  @ResponseBody annotation. 
+
+	@RestController(class)=@Controller(class)+@ResponseBody(every controller method level).
+
+Http methods :-
+-------------- how we are choosing which Http method has to considered based on reqiurment.
+
+Rest client(postman, insomnia) :-
+------------ to test our web services we have a concept called as REST client.
+	     rest client act as real time application which trigger rest services and accept response also.
+
+URI Patterns :-
+-------------- can we maintan same uri paths more then one times across all controller classes 
+Ans :- no, in all controller classes the uri should be unique
+case -1:- same uri path same http method type : invalid
+case 2:-same url path and different http method type  :- valid
+
+@RequestMapping : no http method define : valide
+----------------------------------------
+which http method it will accept by default : ALL HTTP METHODS ARE VALID
+-> Request mapping :- RequestMapping[] - RequestMapping we can pass array of values method={RequestMapping.GET,ReqiestMapping.POST}
+-> if there is no any ther attribute :-!RequestMapping("/user")
+
+Short hand / shortcut  mapping annotation of @RequestMapping
+----------------------------------------------------------- 
+->whenever an enpoint supporting only one Http method as per requernment , then in such scenerio we may use shorthand/shortcut mapping anotaion in plece of @RequestMapping
+->spring provided some annotations which are specific for the http method :@postMapping,@putMapping,@deleteMapping,@GetMapping...
+
+Question :-for example we have 20 rest api, in this controlle all end points uri are having same uri("/contact") as common path every end point uri should start with / contact as common uris path(like :-contact/ get...,contact/fatch...)
+Ans :- declaring a path in controller class level by using @RequestMapping("/contact")
+
+-> @PostMapping(path={"/phone","/mobile"}) we can fatch one endpoint by using two uri
+
+JSON(java script object notation) :-web only knows xml/json, spring by default supports json
+------
+json is the simple data formate. it is a text format to sorting and transporting the data , it is the self describing and easy to undersatand. 
+
+--> accept JSON data --->read json data to java data --> service  
+-> controller convert to json to java and java to json
+-> by default not provided by springframework we have to add dependency(jackson jar file , GSON provided by google)
+-> but spring boot everything automated. no need to add any convertor, spring starter came  with jackson
+-> spring boot does not provides xml starter
+-> we have  two annotation 
+			json---> java(@RequestBody)
+			java---> json(@ResponseBody)
+-> xml<---jax-B<--->java
+->@RequestBody :-when ever we have request body either json/xml, we have to add an annotaion callld as @RequestBody annotion. we use it in method parameter+
+consumes :-by default supports json,consumes=MediaType.Application_json_value.
+if xml :-consume=MediaType.Application_XML_value.
+
+@ResponeBody :produces:- outgoing response body to client, we use it in method level
+
+produces :- response :service should send response as json/xml
+@PostMapping(path = "/signup", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String signup(@RequestBody UserMappingRequest userMappingRequest) {
+		System.out.println(userMappingRequest);
+		String result = userService.userSignup(userMappingRequest);
+		return result;
+	}
+this api support request as xml and supports esponse as json
+
+
+rules -
+------ it contain data in key value pair 
+	"key":"value"
+	every key value should be seperated by comma(,) untill last key value pair 
+	key :- property name
+	value :- property value
+	key must in enclosed by double quotes
+	but is value is string then only it is enclosed by double quotes if it is boolean or numeric then it is not in double quotes
+	key does not have space and write in camel case
+	
+
+	{
+	"name":"saloni",
+	"mob" :53463635
+	"email":null
+	}
+json object:-
+------------- key and value pairs are wrapped/ binded in {}, then it is called jSON object
+
+json array :we use [] brases to represents the json array
+-----------
+Json arrays of String values :[
+				"laptop",
+				"mobile"
+				]
+in general , for json arrays we use List<items> to represent Json array
+
+
+
+swager api documentation :- it collect all web service of our sping boot application and shows as doxumented in UI.
+------------------------
+swagger url
+-----------
+hostname:portnumber/contextpath/swagger-ui.html, used for quick testing we have to add dependency
+http://localhost:9898/insta/swagger-ui/index.html
+
+swagger vs json:-
+------------------
+ swagger does not holds history but postman holds history
+
+@JsonProperty annotation :-
+-------------------------if we want to defing the name of property differe in java and json then we use a annotaion is called @JsonProperty
+
+in postmane first_name  == in java firstName
+
+Request body validation :-
+------------------------ when we create our REST API we have to identify whch field is mandatory or which is optional
+we have to impl validation of request body.if all validations are passed then Request body  is valid and procced to next logic execution.
+if one of the validation is fail then request body does not proceed for further execution and return response imidialty to the client as bad request.
+-> by default validation framework is not supported by Spring framework we have to add starter of validation.
+@Valid :-
+--------when we want to validate a specific request body of service,we have to add a annotation @Valid
+	this annotation should be use along with @RequestBody annotation.
+when we add @Valid annotation just before @RequestBody it will start validate the Request body
+-> add validations on requestbody fields.
+____________________________________________________________________________________________________________________________
+
+REST api implementaion :load operation :-
+----------------------------------------
+
+1. path variables/params
+2. query parameter/ request parameter
+
+profile id= resource id;
+
+Path variable :-
+---------------path variables are used to share resourc id's with API's.
+		path variables are defined as a part of URI and enclosed with {...}
+		path variable is a place holder of a value inside URI path
+		binding path variable value to method argument
+		/uripath/{emailId}
+-> make sure path variable data is always public informaton
+-> if path variable and method argument name is same then we ignore @path variable name.
+Question :- How many path variable we are defind in URI :more then one
+
+ocbs
+iterat fail fast kyo hota hai fail safe hota hai toh kyo hota hai completeble frame work  in an application 
+springboot github link 
+
+Request parameters/ query parameters :-
+-------------------------------------Query param is always passed by uri.and t is always passed on the form of key and value pair.
+					brand=apple.
+->it is always started from query symbol.
+-> we can define more then one query parameters
+->all query paramters of uri is called query String.
+-> for this spring framework provided an annotation is called @RequestParam
+-> as developer we are not responsible to write query symbol (?),it is pass by client.
+
+EX:-localhost://insta/get/data?city=khargone?country=india
+http://localhost:9898/insta/get/age/qualification?age=30&qualification=BTech
+
+Question :- how to imlp rest api by using query parameters.
+req:- get user by city
+
+Question :-can we make query parameteres as optional ?
+Ans :-yes if we want to make our query parameter  as optional then we use required=false , by default it is true
+
+Question :-at what time we use @pathvariable and @RequesatParamter?
+Ans :-@PathVariable :- when we having limited number of data and all are mandetory then we are used @PathVariable.
+EX: instagram search
+@RequestParam :- when we having lots of data and those all are not madetory the we use @RequestParam(serching operations) we use it in filter operation 
+search on flipcart
+______________________________________________________________________________________________________________________________
+
+Http Response States codes :- this codes are 3 degit number.this is request execution code provided by web server.
+--------------------------
+
+Http protocol :-it gives 5 types of status code based on the request and response operations.
+---------------
+
+1.1xx :-informational response :-it give the information of response but dont give real response.the request wat recieved,continuing proccess.
+		100:swiching one protocol to another protocol
+		101
+		102
+
+
+2.2xx: it gives success message , request is recieved , prossecced and responded.
+		200 :ok(no insertion)
+		201 :created(when the new user is added successfully in db)
+		202 : accepted(whe record is already available and new user did not creaated)initialy accepted but after in future 		there is any misteck then server return the data 
+
+		204 :no content : when we fatch those data which is not available. 
+3.3xx :send ridirect form abc to xyz
+
+
+4xx:-when ever client side mistek is occure we represent this by 400 reries.or to represent client level mistek we use 400 series
+		400 :bad request
+	eX:server accepted post but you sent get
+	  sent email->saloni
+
+	404 :- when page not found
+	405 :-method not found
+	415 : unsupported media type(we send xml but browser espected json)
+	
+5xx:-sever application having the issues,, server is not able to procces our request
+Ex: database is down
+ you are not handle the Exception properly
+when we send null data
+
+500: internal server error:-server is not able to procces our request
+
+
+Costom status code bind with response :-
+----------------------------------------
+Note :- when the client proccess the request server always return 3 things -
+	1)body 2)header 3)status code
+
+ResponseEntity class :-
+---------------------this class is used to bind body , status code and header together.
+		      -> at end point method return type level we have to define ResponseEntity class
+to represent status code we have a INterface HttpStatusCode.valueOf(200)
+______________________________________________________________________________________________________________________________
+
+Http Headers :- 8 headers
+------------ headers are used to share mata data between client and server.
+	     it share additional imforamtion as part of request and response.
+		Ex: with bussiness logic send content type  either JSON or XML(along with request) etc.
+it segrigate into two parts
+1) Request header:- header which is part of request
+			Ex:content-type    :     application/json,application/xml(data type of Request body sent by client to server)
+			content-type       :     response accepted by client
+			Accept 		   :     is header represent what type of response it will accept(*/* both xml and json)
+						if accept=application/json then client only accept json,and if accept= application/xml then client only accept xml
+					
+2)response header   : the header or extra imformation which is receiving  from server side to client side is called as Response header.
+
+
+
+again ther are two types of headers :-
+
+1)pre-defined headers :-which is pre defined by Http protocol
+			Ex :-content-type 
+			     accept
+
+2) user-defined headers :- header wi=hich are defined by user 
+				user-request header
+				user-response header
+
+
+Question :-how to read header from request body ?
+
+req :-create a rest api which accept a security - tokan as headerand its value
+/load/{emailId}
+client :-not added header : security token :bad request
+client : addded header :security tokan : read the value of token 
+
+API : backend
+contoller :- defined a contom header security token in side controller method 
+
+
+Question :- how to add header with response body
+Ans : by using ResponseEntity class.
+to define header SB provides a class ,HttpHeader, by using this class we can add required header
+@PostMapping("/get/authonticaton")
+	public ResponseEntity<UserInfomation> getAuthenticateUser(@RequestBody UserInfomation userInfomation) {
+
+		boolean isvalide = true;
+
+		if (isvalide) {
+
+			UserInfomation body = new UserInfomation("suhana", "suhana@gmail.com", "shuhana123");
+			HttpHeaders header = new org.springframework.http.HttpHeaders();
+			header.add("security-token", UUID.randomUUID().toString());
+			header.add("accept", "*/*");
+
+			ResponseEntity<UserInfomation> responseEntity = new ResponseEntity<UserInfomation>(body, header,
+					HttpStatusCode.valueOf(200));
+			return responseEntity;
+		} else {
+			return ResponseEntity.ok(null);
+		}
+
+
+
+@RequestHeader annotation : when you want define a header in API levle then we use @RequestHreade
+---------------------------
+
+@RequestHeader("security-token")
+
+
+QUestion :- how to read header from request ?
+Ans :-@PostMapping("/get/login")
+	public UserInfomation loginUser(@RequestBody UserInfomation userInfomation, HttpServletRequest r,
+			@RequestHeader(name = "encrypt-password", required = false, defaultValue = "73hfhf8eh") String token) {
+
+		System.out.println(r.getHeader("encrypt-password"));
+		System.out.println(token);
+
+		return new UserInfomation("saloni", "saloni123", "saloni@gmail.com");
+	}
+___________________________________________________________________________________________________________________________________
+
+				Consuming the rest services
+
+		producer                                                   consumer
+1.application which impl rest services                      1.application which call another rest service is called consumer
+
+-> calling another application rest services , are called consuming rest services.
+
+RestTemplate class:- this is used to consume rest services.it is acting as a rest client.
+it has some methods like : getForEntity, exchange()overloaded
+it converts json to java
+RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<List> forEntity = restTemplate.getForEntity("http://localhost:9898/insta/payment/options",
+				List.class);
+
+		
+		List body = forEntity.getBody();
+		return body;
+
+HttpEntity :-whenerver rest service is having bdy or header or both then we take help of HttpEntity class,
+---------it represents Http  request or response entyty, consisting of header and body
+	 we are binding header and body into HttpEntity as single element
+		HttpEntity=body+headerf
+
+
+what is ResponseEntity ?
+Ans ResponseEntity=header+body+status code
+whenever we have response body with respect to json payload then we have to create pojo classes speficif to response body and pass it into RestTemplate class.
+-> RestTemplate internally  convert json comming from produces application to respective java objects
+
+public ProductResponse addProduct() {
+		
+		RestTemplate restTemplate= new RestTemplate();
+		
+		Product p=new Product();
+		p.setId(101);
+		p.setTitle("girls");
+		p.setCategory("girls");
+		p.setDescription("khjgjhgjh");
+		p.setPrice(678680.9f);
+		p.setImage("gjhg");
+		
+		HttpEntity<Product> httpEntity=new HttpEntity<>(p);
+		
+		
+		ResponseEntity<ProductResponse> exchange = restTemplate.exchange("https://fakestoreapi.com/products", HttpMethod.POST, httpEntity, ProductResponse.class);
+		
+		
+		ProductResponse body = exchange.getBody();
+		System.out.println(body);
+		
+		return body;
+	}
+	
+Path variable & Query param and header :-
+----------------------------------------
+________________________________________________________________________________________________________________________________
+
+REST service implementaion by XML :-
+-----------------------------------
+	
+xml  tag names becomes java property name,
+->415 unsupported mediatype :-when no supported media type by default.
+->we have to add xml dependency
+	1.jackson xml converter
+	2.jaxb api
+
+consume :- incoming request
+produce :- outgoing response
+_______________________________________________________________________________________________________________________________
+
+Exception handling in rest api :-
+-------------------------------
+
+@ControllerAdvice   classes
+@EexceptionHandler  methods
+
+define a controller advice class and inside this class define exception handler methods
+
+Controller advice class :-
+-------------------------
+
+A class which is defined with @ControllerAdvice annotation is called  Controller Advice class.it is consider as globle exception handling class.this class handle different types of exception as part of request proccessing.
+
+A method which is annotated with @ExceptionHandler annotation is called @ExceptionHandler method.for handling the specific exception 
+we have to define Exception handler method.
+-> return type should be ResponseEntity
+->inside annotation we have to define which type of Exception we want to handle
+-> defind exception in method argument level, as well as also define HttpServletRequest in second argument
+
+
+why it is called @ControllerAdvise
+Ans :-contoller layer contects this class for an advice when exception is occures.
+_______________________________________________________________________________________________________________________________
+
+
+Spring boot actuator :-
+---------------------IT  is a module in spring boot,spring boot provides an ready made api/endpoints for monitering the spring boot application.
+-> by deafault spring boot actuator does not enabling all the enpoints due to security in application
+-> by defulat spring boot acatuator enabling only one endpoint /health
+
+How to enable it ?
+
+what is monitering ?
+------------------
+
+this module provides few rest services, by using this services we can check the health status of application
+like :- health status
+log levels
+beans
+handler mapping inforamtion
+metrics
+config inforamtion
+
+path :- localhost:9999/insta/actuator/health
+http://localhost:9898/insta/actuator/loggers
+http://localhost:9898/insta/actuator/mappings
+________________________________________________________________________________________________________________________________
+
+Springboot yaml or yml file :-
+--------------------------
+application.properties file :-
+
+
+Configuration of  data :-
+1) predefine data
+2) user define data
+
+
+properties file :-
+1-> extention is .properties
+2->in key :- each name seperated by .
+3-> holds data in key and value pair.
+4->spring.application.name =
+instead of using .properties file we can use yaml or yml file
+
+what is YAML :-
+-------------this is another markup language, it is more flexible and more compatable with existing devops tools and software technologies point of view .yaml is more compatable.
+-> linex op is much more compatible with yml
+-> people are considering more yml file make more automation point of view with respect to cicd proccess
+-> file extention is .yaml/yml
+-> hold data in key and value pair
+-> key : names are seperated by :
+-> we have to follows stair case formate
+-> next word should be define below of prevoise word by making some space
+->Ex :-spring:
+	 application:
+	   name:
+	 datasoouce:
+	   url:
+	   passwor:
+	   userid:
+	 jpa:
+	   show-sql:
+
+Question:- in our springboot if are delete application .properties file then waht will be happen /
+Ans :- the application is still runnig with some domy data
+
+bootstrap file :-
+----------------to get external configuration data into application, primary used in cloud invironment
+
+bootStrap.properties
+bootStrap.yaml
+_______________________________________________________________________________________________________________________
+
+spring boot profile :-
+--------------------
+uat :- user acceptance test
+SIT :- System entegration testing
+-> in s/w their are many environment :- [DEV, SIT],QA/UAT,PROD
+-> for each environment configuaration data segrigation we can use profile in spring boot
+
+step1:-
+-> create another properties file with profile name
+->application-{profilename}.properties
+->application-dev.properties
+
+note :- contect-path and server port is same in all environment which we are define inside default application properties and it is autometically available for all  environmet 
+-> when we are not provide any profile then application.properties will consider as defualt properties
+
+activations of profiles :- there are multiple ways to active the profiles
+------------------------
+
+1. aproch -1:- add below propery in application,properties
+		spring.profiles.active=dev(which profile you want to active like :- dev, uat, prod)
+2. aproch -2:-add property in environment(command line argument)
+
+2.aproch-2 :- if a property existed  in both defualt and profile apecific config file with same or different values
+		profile spesific
+		in vm argument
+		spring.active.profiles=uat
+
+note :- by using profiles , we can manage/configure bean object specific to environment
+
+transactional event listener
+schedul annotation
+log monitering, functinal testing,documatation ui ,sdlc,agile metholoy,junit,database
+ATS resume check
+
+
+	

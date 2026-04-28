@@ -1,0 +1,56 @@
+My role and responsibilities in my project :-
+
+“Currently, I am working as a Java Developer on the TradeX project, which is a digital securities and commodity trading exchange. My role mainly focuses on backend development using Java and Spring Boot.”
+
+I am involved from requirement understanding to implementation. I work closely with the business team to understand trading workflows like bid creation, bid modification, ranking updates, and auction lifecycle, and then convert these into technical solutions.
+
+On the development side, I design and develop REST APIs using Spring Boot and Spring MVC to support real-time trading operations. I implement core business logic for bids, offers, user roles, and transaction validations.
+
+I use Hibernate and JPA for database interaction,
+
+I also integrate reporting using Jasper Reports for trade summaries and transaction reports.
+
+In addition, I write unit test cases using JUnit, perform API testing using Postman, I also support deployments on Apache Tomcat and actively monitor application health using Spring Boot Actuator and logging using Log4J.
+
+We follow Agile methodology, so I participate in sprint planning, daily  stand 
+-ups, and collaborate closely with QA and DevOps teams to ensure smooth and timely delivery.”
+________________________________________________________________________________________________________________________________ _ 
+
+“My project is TradeX – a Digital Securities and Commodity Exchange where buyers and sellers participate in live auctions.
+It’s a SpringBoot-based backend application built using Spring Boot, JPA/Hibernate, JWT security, Kafka, Jenkins, and Jasper Reports.
+
+I worked as a Java Backend Developer, mainly responsible for designing REST APIs, business logic implementation, and JPA-based database operations.
+
+I implemented Authentication & Profile Management, where users register and log in using JWT-based authentication. Passwords are securely hashed using BCrypt, and profile ownership is validated to prevent unauthorized access.
+
+I also worked on the Bidding module, where sellers list commodities and buyers place live bids. Each bid is validated to ensure it is higher than the current highest bid. I handled concurrent bidding using transactional logic and ensured real-time rank calculation.
+
+I also worked on reporting, where we generated PDF reports using Jasper Reports for bidding history and sales analysis.
+
+
+Overall, my focus was on building secure, scalable, and high-performance backend services for real-time auction processing.”
+
+EIMA :-Project Overview (How to Start in Interview)
+
+“EIMA is an Enterprise Institute Management Application developed using Spring Boot.
+It is designed to manage students, employees, courses, attendance, and notifications in a centralized system.
+The main goal of the application is to reduce manual work and provide a single platform for all institutional operations.”
+____________________________________________________________________________________________________________________________________________________________
+
+for project :-Mapping This Project to Your Role (MOST IMPORTANT)
+
+You should say this confidently 👇
+
+“In this project, my role was primarily backend-focused. I worked on designing REST APIs, implementing bidding and auction business logic, handling authentication using JWT, managing database interactions using JPA/Hibernate, and ensuring transactional consistency for wallet and order processing.”
+
+“In the Admin module, I implemented REST APIs using Spring Boot. Controllers handle HTTP requests, business logic is written in the service layer, and database interaction is done using Spring Data JPA. Admin can manage categories, users, and monitor system data. All operations are secured using role-based access.
+
+______________________________________________________________________________________________________________________________________________________________
+
+are you serving your notice period ?
+once i get  offerlater and joining confurmation i will put down my resignation
+
+why you are changing your company ?
+  because the project  i am working in is about to close and there are no upcoming projects so i am looking for the change.
+_______________________________________________________________________________________________________________________________________________________
+_______________________________________________________________________________________________________________________________________________________________ 

@@ -1,0 +1,227 @@
+				               Spring security
+
+
+Agenda :
+-------
+
+1.Introduction
+2.Authentication
+3.Authorization
+4.Spring boot with security
+5.In Memory authentication
+6.UserDetailsService
+7.user RegistraTION
+
+
+Spring Security :-
+----------------
+1.Security is very important of anny application.it is used to secure our web application and REST APIs.
+2.to protect our application we need to implement security
+3.to implements security we need to khow about two concepts :-
+	1.Authentication :- means who can access our application
+	2.Authorizaton :- which user can access which functionality
+
+working with spring security :-
+----------------------------
+1. to achive security in our application we need to add two dependency in our application :-
+
+<groupId>org.sprigframework.boot</groupId>
+<artifactId>spring-boot-starter-security</artifactId>
+
+2. when we add dependecy our appplication by defualt our application will be secuired by http basic authentication .
+3. it will generat random password to access our application.
+4. we need to use below credencial to access our application.
+basic authentication :defailt username=user
+			      password provided by appliation
+
+key :-Authorization
+
+value :- encoded username and password(Basic dXNlcjo3Y2EwOGQxOS0yMTk5LTQ5NjQtYjMwNS0wNDBjYmE3MjY5YmQ=)
+
+Qusetion :-how to sent authentication details in request header using RestTemplate ?
+Ans :-it is the class in web mvc to send HTTP request programmatically , it is helping to send the header and webclient will aslo support for sending the request.
+note :when you are acceessing sequred rest api you need to sent the header n the request then it will alows you to access otherwise it will not alowes you to access.
+from browser :-login page
+postman :-authentication details header
+programatically you are sendding :- header we need to add in the request 
+
+How to set the header in the request :-by using RestTemplate class
+How to override sequrity default credentials :-
+
+spring.security.user.name=saloni
+spring.security.user.password=saloni@123
+
+String apiurl = "http://localhost:9898/insta/msg";
+
+		HttpHeaders header = new HttpHeaders();
+		header.setBasicAuth("saloni", "saloni@123");
+
+		HttpEntity<String> reqEntity = new HttpEntity<>(header);
+
+		RestTemplate rt = new RestTemplate();
+
+		ResponseEntity<String> resEntity = rt.exchange(apiurl, HttpMethod.GET, reqEntity, String.class);
+		System.out.println(resEntity.getBody());
+_______________________________________________________________________________________________________________________________
+
+How to secure apecific url :- when we add 'security-start' in pom.xml then it will apply security  filter  for all the Http method  
+-------------------------- of our application.
+
+but in realty we need  to secure only few methods not all methods in our application :-
+
+					contect us=no security
+					login     =security
+in order to achive above requirment we need to costomized security configuration in out project.
+
+@Bean
+	public SecurityFilterChain getSecurity(HttpSecurity http) throws Exception {
+
+		http.authorizeHttpRequests(req -> req.requestMatchers("/contect").permitAll().anyRequest().authenticated())
+				.httpBasic(Customizer.withDefaults()).formLogin(Customizer.withDefaults());
+
+		return http.build();
+	}
+
+How to contomize spring security :by using SecurityFilterChain
+_________________________________________________________________________________________________________________________________
+
+
+Spring security In-Memory Authentication :-
+-----------------------------------------In-memory authentication means storing user credentials in the program  for authentication perpose
+Note :- this is only use full only for practice perpode not in real time. 
+@Bean
+	public InMemoryUserDetailsManager inMemoryUsers() {
+
+		UserDetails userDetails1 = User.withDefaultPasswordEncoder().username("aman").password("aman@123").build();
+
+		UserDetails userDetails2 = User.withDefaultPasswordEncoder().username("aayush").password("ayush123").build();
+
+		UserDetails userDetails3 = User.withDefaultPasswordEncoder().username("kiyara").password("kiyara123").build();
+
+		return new InMemoryUserDetailsManager(userDetails1, userDetails2, userDetails3);
+	}rrName
+_________________________________________________________________________________________________________________________________
+
+BCryptPasswordEncoder :-encrypt our password before store it to  the database.
+SecurityFilterchain :- to specify for which url patterns security is required for which url patturn security is not required
+_________________________________________________________________________________________________________________________________
+
+-> for authentication spring security provides a class UserDetails with proides a authentication method loadUserByUserName(String emailId)
+	Constomer c=customerRepo.findByEmailId(email);
+	return new User(c.getEmail,c.getPassword,Collections.emptyList());
+ loadUserByUserName(String emailId) :- load the record from data base for authentication perpose this method is called by authentication provider 
+
+Authentication AuthManager :- 1)to perform actual authentication but data is an table AuthProvider load the data by the help of service
+2) it check login credentials are valide or not.
+
+
+BCryptPasswordEncoder--->
+UserDetailsService-->load the user record at the time of authentication
+AuthProvider-->load the user data and give it to AuthManager
+AuthManager -->it perform actual authentication	
+UsernameAndPasswordToken --> set login credentials for validation    
+
+JWT token :-JWT is open source standared used to share information between client- server application.by using this we will gerrate  
+-----------and validate the token
+by default spring boot not providing any JWT library.
+
+JWT token has three parts :
+----------------------------
+
+1)header :-which type of token we are using and what algorithum we are using 
+2)payload :- it holds user inforamtion, which user use this token
+3) signature:-secrete  key is available for this token(encoded header+encoded body+secret key)
+all three parts are diveded by (.)
+
+OncePerRequestFilter(AppFilter class) class:-
+----------------------- this class is responsible for validate the token.if the token is valide then request will be proccess if token is invaide then proccess will be failed.
+-> this class executes when the request come for secured URL patterns
+->checks token present for request.
+-> if token is available then read the token and validated the token and proccess the request
+-> if token is not available then then sent roor msg .does not proccess the request.
+ 
+JwtServise class:- generateToken(), validateToken();
+
+
+implements :-
+------------
+
+1) we have to add JWT libraries
+
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-api</artifactId>
+    <version>0.12.7</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl -->
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-impl</artifactId>
+    <version>0.12.7</version>
+    <scope>runtime</scope>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson -->
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-jackson</artifactId>
+    <version>0.12.7</version>
+    <scope>runtime</scope>
+</dependency>
+
+Validating token :-
+-----------------
+server checks :
+1) time expire or not
+2) read userId from the token
+
+Spring boot security configuration :-
+-----------------------------------
+
+-> spring boot security model provides saome predefined interface to enable user authentication and authorization 
+-> whenever the table is having uer credentials associated intities ,class should implements interface UserDetails from security model
+
+till working :
+--------------
+
+1)impl api(public/protected)
+2)JWT libraries :-creating jwt token , validate JWT token
+3)SPRING BOOT credential :
+			a)impl UserDetails by Entity class(credential)
+			b)impl UserDetailsService :-loading user inforamtion from the DB(this istanse/method spring security we be utilized)
+4)filter will be executed before Dispatureservlet
+5) validating token for every protected API incoming request
+	OncePerRequestFilter : filter clss provided by SB
+	once for  every request will be executed
+6) creating a filter class which extends OncePerRequestFilter(Cunstom filter class)
+7) client and server exchanges tokens by using headers.
+	User define header name :Authorization(header name) :hreuingdjfghglsgs(token value)
+8) when a request comes client to server application it always come with header alonges with token
+9) request always have two things paylad and headers
+10 we have to configure security layer : which api is under security layer and which api is not under security layer
+
+________________________________________________________________________________________________________________________________
+
+auth 2.0 :- 
+----------
+it stands for open authorization.
+if you want to get user data from another webside to your web side  you can you auth.
+Ex: login into nykaa weside by using our google acount.
+
+create the outh app in github :-
+------------------------------profile --->setting---->developer setting-->Auth app --> create app --->copy client id and client cecrete
+
+salonigit123
+
+Note :- client application should sent jwt token to provide token in below formate
+header key = authorization
+header value=bearer
+
+{
+"currentPassword":"abcd123",
+"newPassword":"abc123abc"
+
+
+
+}

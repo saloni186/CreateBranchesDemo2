@@ -1,0 +1,194 @@
+what is branches do you use in your project 
+what is target
+expession
+
+internal working of HashMap ?
+HashMap uses an array of buckets.
+Each bucket stores Nodes (key, value, hash, next).
+When you put a key, HashMap calculates hash, finds index, and adds the entry.
+If collisions occur, it stores entries in a linked list, and if the list becomes too long (more than 8 nodes), it converts it into a Red-Black Tree to improve performance.
+During resizing, the array size doubles and all entries are rehashed and redistributed. 
+
+when collision occure ?
+Ans :-Collision happens when two different keys get stored in the same bucket (same index) inside the HashMap.
+
+Questions :-how concrenthashMap mainten the concurrency without locking the entire map
+Ans :-ConcurrentHashMap uses bucket-level locking + CAS-based lock-free updates, so multiple threads can operate concurrently without locking the entire map.”
+
+Question :- explain method references abd contructor references with eaxmple
+Method references are shorthand for lambda expressions that call existing methods.
+Constructor references are shorthand for lambda expressions that create new objects.
+_______________________________________________________________________________________________________________________________
+
+what is the difference between HashMap ,LinkedHashMap, ConcurrentHaashMap ?
+
+1. HashMap
+
+Not thread-safe.
+
+Stores elements in key–value pairs with no guaranteed order.
+
+Allows one null key and multiple null values.
+
+Uses hashing for fast performance (O(1) average for get/put).
+
+Fail-fast iterator → throws ConcurrentModificationException if modified while iterating.
+
+
+-------
+
+2. LinkedHashMap
+
+Is a subclass of HashMap.
+
+Maintains insertion order or access order (if configured).
+
+Not thread-safe.
+
+Allows one null key and multiple null values.
+
+Slightly slower than HashMap due to ordering.
+
+Also has a fail-fast iterator.
+
+Use-case: When you want predictable iteration order.
+Example: LRU cache implementation (via removeEldestEntry).
+
+------------
+
+ConcurrentHashMap
+
+Thread-safe (designed for concurrency).
+
+Does NOT allow null keys or null values.
+
+Uses advanced concurrency techniques:
+
+Java 7: Segment locking
+
+Java 8+: CAS + synchronized blocks on bins
+
+Multiple threads can read/write without blocking each other.
+
+Iterators are weakly consistent:
+
+Do not throw ConcurrentModificationException
+
+Reflect updates during iteration
+
+Best for: High-performance concurrent applications.
+
+TreeMap 
+
+Key Features
+
+Sorted order (natural or custom comparator)
+
+No null keys (NullPointerException)
+
+Slower than HashMap (O(log n))
+
+NavigableMap support
+
+Internal Structure
+
+Red-Black Tree
+
+Example
+Map<Integer, String> map = new TreeMap<>();
+map.put(3, "C");
+map.put(1, "A");
+map.put(2, "B");
+
+
+👉 Output: 1, 2, 3
+
+Use Case
+
+When sorted data is required
+
+Range queries
+
+Comparison Table (INTERVIEW GOLD)
+Feature	HashMap	
+
+_______________________________________________________________________________________________________________________
+
+volatile keyword and atomic integer
+Ans :Visibility → When one thread updates a volatile variable, other threads immediately see the updated value.
+____________________________________________________________________________________________________________________________
+
+suppos spring application start very slowly due to heavy bean initialization how would you aptimoze startup time
+
+1. Use Lazy Initialization
+@Lazy
+@Bean
+public HeavyBean heavyBean() {
+    return new HeavyBean();
+}
+
+2.Remove Unnecessary Auto-Configuration
+@SpringBootApplication(exclude = {
+    DataSourceAutoConfiguration.class,
+    SecurityAutoConfiguration.class
+})
+4. Profile-Based Bean Loading
+@Profile("prod")
+@Bean
+public CacheWarmer cacheWarmer() {
+    return new CacheWarmer();
+}
+5.Enable Spring Boot Startup Logging (Actuator / Flight Recorder)
+6. Database Optimization (Common Cause of Slowness)
+
+Reduce schema generation (spring.jpa.hibernate.ddl-auto=none)
+
+Disable JPA validation on startup
+
+Use connection pooling (HikariCP)
+______________________________________________________________________________________________________________________________
+
+how does spring boot auto configiration work
+Spring Boot auto-configuration automatically configures Spring Beans based on what is present on the classpath and based on application properties. It reduces the need for manual @Configuration classes.
+______________________________________________________________________________________________________________________________
+
+cacheevict and cacheput
+@CacheEvict is used to remove one or all entries from the cache when data changes, while @CachePut updates the cache with the latest result of a method. @CachePut always executes the method, whereas @CacheEvict can remove cached data before or after method execution.”
+_____________________________________________________________________________________________________________________________
+
+what is batch fatching in springboot
+Batch fetching is a performance optimization technique in Hibernate/Spring Boot used to reduce the number of SQL queries when loading associated entities.
+
+Instead of loading one associated entity per query (N+1 problem), Hibernate loads a batch of entities in a single query.
+Batch Fetching
+
+Batch fetching tells Hibernate to fetch multiple child entities in one query, reducing the number of database hits.
+_____________________________________________________________________________________________________________________________
+
+n+1 query problem ?
+
+“The N+1 query problem occurs when fetching a parent entity triggers 1 query for the parent plus N separate queries for its children, usually due to lazy-loading. This is inefficient. Solutions include join fetching, batch fetching, or entity graphs to reduce the number of queries.”
+
+Imagine you run a company with departments and each department has employees.
+
+You want to print the names of all employees in all departments.
+Why it’s a problem
+
+Too many database calls → slows down the application
+
+Increases load on the database
+
+Could crash your app if N is very large
+________________________________________________________________________________________________________________________________________________________
+
+what is ConcurrentHashMap and how it is different from SynchronizedMap ?
+Ans :-ConcurrentHashMap is a thread-safe implementation of Map that allows multiple threads to read and write concurrently without locking the entire map.
+
+Collections.synchronizedMap() returns a thread-safe map by synchronizing the entire map.
+______________________________________________________________________________________________________________________________________________________
+
+what happens if you modifies a list while iterating over it ?
+Ans :-“Modifying a list while iterating using a normal iterator causes ConcurrentModificationException because Java collections are fail-fast. The correct way is to use iterator.remove(), removeIf(), or concurrent collections.”
+________________________________________________________________________________________________________________________________________________________
+
+

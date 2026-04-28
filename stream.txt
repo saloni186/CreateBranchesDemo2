@@ -1,0 +1,71 @@
+							Stream
+
+1.Stream :- wrapper on the data source.stream is not data structer but it will take datastruture as inpute to perform operations.
+-> stream will not disturb the actual data source object.so whe we doing operations on stream it will not impact actual data source.
+_____________________________________________________________________________________________________________________________________
+
+How can we inizialized the stream objects ?
+Ans :-
+
+// from collecton objects :-
+Stream<String> stream1=	List.of("saloni","jaiswal","bamnala").stream();
+
+
+//Arrays of value 
+String[] arr={"saloni","jaiswal","bamnal"};
+Stream<String> stream2=Arrays.stream(arr);
+
+//Streams of method
+Stream<String>  stream3=stream.of("one","two","three");
+
+//generate method
+
+Stream<String> stream4=Stream.generate(()->"one");
+
+//builder()
+// by using bulider design pattern
+Streambuilder<String> streamBuilder=Stream.builder();
+Stream<Stream> stream5=streamBuilder.add("one").add("two").add("three").build();
+function and 
+
+ // empty stream
+// empty()
+Stream<String> stream6=Stream.empty();
+________________________________________________________________function_______________________________________________________________
+
+Stream operations :-
+-------------------
+stream pipeline :-
+
+1. Intermidiate operatons :-when we call method belongs to intermidiate operations.it always return another stream instanse as result , we can call many intermidiate operation on same stream instance as chain of method that is called stream pipeline.
+intermidiat operation executes only once when we invoke  terminate operation.
+
+Terminal operations :-
+--------------------
+
+1. we can call only one terminal method on any stream instance
+2.when we call terminal method , we will get the result of all pipeline operationed which are performed on stream instance.
+
+peek():- for tracing or perform any action, what are the values being proccessed from one operation to another operation,Debugging & logging
+
+stream():- the stream object is created in sequesncial stream, the elements inside stream will be proccessed one by one in stream,thats why is will take more time to perform opreations.it will give the guarantee of proccessing of elements 
+parallel stream() :-the stream object is created in parallul stream, when we create parallel stream objects the stream is devided into multiple segments and each and every segment is proccess by each any every therad symolutaniously work on steam elements. it will take less time to perform operations , it will not guarantee of order of proccesssing of elements 
+__________________________________________________________________________________________________________________________
+
+Collect() & Collectors class :-
+-----------------------------
+
+Collectors class :- it is imtroduced in jdk 8 , to suppport stream operations ,it gives us to utility functionaliteas to perform database operationsit is used to collect lements from stream instance .
+
+// before 16 we use collect(Collectors.toList)
+// after 16 we use toList(); directly
+
+boxed :- convert primitive to Object(int to Integer)
+		Arrays.stream(arr).boxed().sorted((e1, e2) -> e2 - e1).forEach(System.out::println);
+mapToObj(num->Integer.valueOf(num)) :convert primitive to Object(int to Integer)
+				Arrays.stream(arr).mapToObj(n -> Integer.valueOf(n)).sorted((e1, e2) -> e2 - e1).forEach(System.out::println
+_______________________________________________________________________________________________________________________________
+
+what is difference between map() and flatMap();
+Ans :-In Streams, map() is used for one-to-one mapping—each element is transformed into another single element.
+flatMap() is used for one-to-many or many-to-many mapping—when each element returns a stream or collection, and we need to flatten those into a single stream.”

@@ -1,0 +1,62 @@
+What is JasperReports?
+
+JasperReports is an open-source Java library used to generate reports such as:
+
+PDFs 📄
+
+HTML pages 🌐
+
+Excel files 📊
+
+Word documents
+
+It is commonly used in Java applications to create dynamic reports from data.
+
+What is a Jasper Report?
+
+A Jasper Report is:
+
+A formatted report created using JasperReports
+
+Usually based on a .jrxml file (an XML report design)
+
+Filled with data from a database, Java objects, or other data sources
+
+How it works (simple flow)
+
+Design the report → .jrxml
+
+Compile it → .jasper
+
+Fill it with data (SQL, Java beans, etc.)
+
+Export it (PDF, Excel, HTML…)
+
+Simple example
+JasperReport report = JasperCompileManager.compileReport("report.jrxml");
+
+JasperPrint print = JasperFillManager.fillReport(
+    report,
+    new HashMap<>(),
+    dataSource
+);
+
+JasperExportManager.exportReportToPdfFile(print, "report.pdf");
+
+Where it’s used
+
+Java web apps (Spring, JSP, Servlets)
+
+Enterprise systems
+
+Billing, invoices, reports, dashboards
+
+Key tools
+
+JasperReports Library (Java API)
+
+Jaspersoft Studio (visual report designer)
+
+If you want, I can:
+
+explain it in very

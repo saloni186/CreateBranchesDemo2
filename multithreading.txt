@@ -1,0 +1,159 @@
+			             Multithreading Inhancement
+
+Important point :
+1. every thread belongs to a group.
+2. main thread belongs to main Group.
+3.every thread in java is part of System.
+4. System group contains System level threads like - gc(finalizer), referance handler, signal despatcher
+5. TG is a java class. it is the child class of Object class. and it is present in java.lang packege
+6.Contructors :
+ThreadGroup(String gn):create a new thread group , parent of this group is current exexcuting group(main).
+		ThreadGroup tp=new ThreadGroup("MyThreadGroup");
+
+ThradGroup (ThreadGroup ,String);
+	        ThreadGroup tp=new ThreadGroup(tp,"MySecondThreadGroup");
+
+7. System ->main ->FirstGroup ->SecondGroup.
+8. the defult max priority is 10;
+9. Threads of TG that have higher priority won't be affected
+
+
+what is threadgroup ?
+ans :- 1)
+a gruop of the thread is nothing but Threadgroup 
+2)we can also create ThreadGroup inside ThreadGroup these are called suGThreadGroup.
+
+2.what is the advanteages of threadGroup ?
+the help of ThreadGroup we can perform common operation very easly.
+*******************************************************************************************************************************
+				       java.lang.Concurrent
+
+1. what is problems with traditional synchrinized keyword ?
+ans :-1.we not have any flexibility to try for a lock without waiting.
+2.there is no any way to specify maximum waiting time for  a thread too get lock which may cause deadlock.
+3. after a thread releases lock which thread get this lock we have not any controll.
+4. sychronized keyword is only used with method level or inside method but not with across multiple methods.
+
+to overcome this problem sun people indroduce java.lang.concurrent.Locks.
+
+Lock(I): - Lock object is similer to implecite lock aquired by a thread to execute synchronized method or synchronized block.
+
+importent methods of Lock interface :-
+
+1) void lock();it is use to aquired a lock.
+2) boolean tryLock(); to aquired a lock without waiting
+3) boolean tryLock(long time,TimeUnit unit(ex -hours)):
+4)void lockInterruptibly();auires a lock if it is available and returns emidialtly if lock is present it is waiting for a lock while wating if thread is interrupted then thread want get the lock.
+5) void unlock() : to releases the lock, to call this method the current thread should be owner the lock otherwise IllegalMonitorStateException will be raised.
+
+TimeUnit :TimeUnit is an ENUM present in java.util.concurrent.TimeUnit package
+
+
+ReentrantLock :-1)it is the implemented class of Lock interface and it and direct child class of Object class.
+2)reentrant means a same thread can aquire same lock multiple time without any issue,it incease the lock count valuse when we apply lock on thread and deccrease count value when we call unlock() on thread and lock will be released whenever count reaches zero.
+
+Contructor :-
+		ReentrantLock r=new ReentrantLock();
+		ReentrantLock r=new ReentrantLock();
+		It should give chance to longest waiting thread.it follows first come first sevre policy
+
+Methods :-
+	1.int getHoldCount();
+	2.boolean isheldByCurrentThread();
+	3.int getQueueLength();
+	4. Collection getQueuedThreads();
+	5.boolean hasQueuedThread();
+	6.boolean isLocked();
+	7.boolean is fair();
+	8.Thread getOwner();
+************************************************************************************************************
+
+			             Thread pool(Executor framework)
+
+Importent points :-
+1. we are not responsible for start a thread.
+2.ExecutorService service=Executors.newFixedThreadPool(3);job ==6, thread ==3
+			here  3 threads are responssible for execute 3 jobs that means a singal thread will be reused for multiple jobs.
+	singal thread can perform 3 jobs at  a time
+	a single thread can perform multiple jobs one by one one by one.
+3. here Executor framework is responsible for create the thread and also responsible for start a thread , programmer does not need to do this manually.
+4.default pool size is 16, 
+5.  while desiing web servers and application server we can use threadpool concept.
+
+
+1) why we use thread pool ?
+ans :-creating a new thread for every new job may creates performance and memory problems to overcome this we should go for thread pool.
+
+2) what is threadpool ?
+ans :- 1.threadpool is pool of already created thread ready to do our jobs.java 1.5 version introdused threadpool framework to implemet threadpool.
+2. threadpool also know as Executor framework.
+
+3) we can create threadpool as follows :
+ExecutorService service=Executors.newFixedThreadPool(3);// where 3 is number of threads available in threadpool
+
+4) we can submit a runnable job by using :-
+service.submit(job);
+
+5) we can shuutdown ExecutorService by using shutdown() :-
+service.shutdown();
+
+Callable and Future :-
+
+Callable Interface :-public interface java.util.concurrent.Callable<V> {
+  public abstract V call() throws java.lang.Exception;
+}
+
+6) what is the difference betwwen Calleble and Runnable interface
+1. run() of Runnable interface does not return anything aftre copleting the job but call() of Calleble interface return some value(Object) after completing the job.
+
+7) what is Future and what is the perpose of Future Objet ?
+ans :- Future is an interface in java which is availble in java.util.concurrent package.it hold return value of call method of Callable interface. 
+
+8) Differences betwwen Runnable and Callable ?
+ans :-   Runnable                                    Callable
+
+1)       it has run()                                1)it has call()
+2)	 return void                                 2)retunr Object
+3)       inside run() if there is                    3)call() throws Exception
+	 chance of raising chechked 
+	 it complesary we should 
+	 handil by using try-catch
+4)       introduced in 1.0 version                   4)introduced in  1.5 version
+5)       run() of Runnable interface 	             5)call() of Calleble interface
+	does not return anything aftre 	               return some value(Object) after 
+	completing the job		               completing the job
+	
+6)      it is present in java.lang.                  6) it is present in java.util.concurrent 
+	packege.					package.
+
+*************************************************************************************************************
+
+				                 ThreadLocal
+
+1) why we use ThreadLocal ?
+ans :-ThreadLocal can be used to defined thread scopes.it provides thread local variables.
+       it is introduced in 1.2 version and enhance in 1.5and it is present in java.lang package.
+    Ex: for every thread if you want to a seperate connection Object.
+	for every thread if you want to a seperate count Object
+what is threadLocal variable ?
+a ThreadLocal variable is a special type of variable that is local to the current thread
+1) thread can access its local value, manupulats its value and evev can remove its value.
+2)
+
+Constructors :-
+		ThreadLocal l=new ThreadLocal();
+methods :- 
+	   1) Object get();
+	                   return the value associated with current thread.
+	   2)Object initialValue();/ 
+	   3)void set(Object newValue);
+	   4)void remove();  
+_________________________________________________________________________________________________________________________________________________________________  	
+
+
+
+
+
+
+
+

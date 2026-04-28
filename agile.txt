@@ -1,0 +1,164 @@
+						Agile methodology
+
+what is agile methodology ?
+-> it follows iterative(requrirment, design, coding, testing) and increametal(keep on adding new features) aproch.
+-> it delevary the software with piece of feature
+-> everybody will work together
+
+->Agile principle -
+1) no need to wait for longer time 
+2) we can develop. test adn release the piece of code with some few features
+3)it accept reqrired in middle
+4)it provides good communication beetween team
+
+advantages :-
+------------
+1) no need to wait for long time
+2) it provides good communication between team
+3)requirment changes are allowed in any of the stage
+4)releas very fast (weekly)
+
+disadvantages :-
+--------------
+less focus on desing and documation
+__________________________________________________________________________________________________________________________________
+
+what is scrum :-
+
+agile is define proccess , but scrum is how to follow  these prciple which we are difine in agile procces, it is asome kind of framework.
+scrum provides group of people called as scrum team ,tream team have 8 -9 members
+
+1) product owner
+2)scrum master
+3)dev team
+4)QA team
+
+1)Product owner :-
+		1) defined the feature of the project
+		2) priotrized  feature according the requrment
+		3)adjust features and priority every iteration as need
+		4)accept or reject the result
+2) scrum master :-
+		1)the main work of scrum master is to drive the agile proccess,
+		2) communicating with all the team members.
+		3) resolve all the problems
+3) developer and QA :-
+		4) developer and test the software
+
+scrum terminologies :-
+1) user story:- a module/freature in a software(product owner)
+2) EPIC:- collection of stories(product owner)
+3) peoduct backlog :- list of storie provided by product owner
+4)sprint :- duration of time to complete user stories(development and testing), decided by product owenr and team , the time period is aproch 2 4 weak.
+5) sprint planing meeting:-meeatng conduct with team to decide ehat can be deliverd in a perticuler stramand duration
+6) sprint backlog :-list of commited stories by developer and QA team for a perticuler backlog 
+7) scrum meeating :- cunduct by scrum master everyday 15 min, it is aslo called srum call or standUp meeting
+			where we disccuse
+			1) what you did yesterday
+			2) what we will do today
+			3) there is any bug and issues are ocure
+
+8) spring retrospective meeting:- conduct meeting after comlpetion of spring , whole team, included scrum master and product owner should included . where we disscus what want well what went  wrong  and what is improment of needed
+
+9) story point :-rough estimate of user story
+i story point=1 hour/1 day 
+login----->Dev-5 QA-3=8 days  
+  
+
+10)burndown chart :-show how much task is remaining,it is maintain by scrum master everyday.
+
+Roles :-
+-------
+1)product owner
+2)scrum master
+3)team
+
+artifacts :-
+--------
+1)product backlog
+2)sprint backlog
+3)burndown chart
+
+ceremonie :-
+-----------
+1)sprint meeting
+2)scrum meeting
+3)sprint review
+
+SCrum board :-it defineds  the progress of an application.
+	    Ex:-Stories,TO DO, inprogress, testing, done
+
+		Developer task                                                        QA task
+	under standing requirment                                              under standing requirment
+	designing								write test scanerio
+	codding 								test execution
+	unit testing								retest bug
+	bug testing								environment setup
+
+to consume rest service we have to some knowleged about producer like:- hostname, post number, http method, suppporting media type,
+									header,pathvariable,request params
+
+RestTemplate class :- with the help of RestTemplate class we can call the rest services of another application, it is act as Rest client
+____________________________________________________________________________________________________________________________________________________________________
+
+What is JIRA?
+
+Answer:
+JIRA is a project management and issue-tracking tool developed by Atlassian.
+It is mainly used to track tasks, bugs, and development work in software projects.
+
+Teams use JIRA to plan, track, and manage work throughout the software development lifecycle.
+
+Why Do We Use JIRA?
+
+We use JIRA to:
+
+Track tasks, bugs, and user stories
+
+Plan work using Agile (Scrum / Kanban)
+
+Assign work to team members
+
+Track progress and deadlines
+
+Maintain transparency between dev, QA, and managers
+
+Real-World Example
+
+In a real project:
+
+Product owner creates user stories
+
+Developers work on assigned tasks
+
+QA raises bugs
+
+Status is updated (To Do → In Progress → Done)
+
+All this is tracked in JIRA.
+
+Key Concepts in JIRA (Interview Important)
+
+Issue – A task, bug, or story
+
+Story – Feature requirement
+
+Bug – Defect in the application
+
+Epic – Large feature
+
+Sprint – Fixed time development cycle
+
+Backlog – List of pending work
+
+Workflow – Issue status flow
+
+How Developers Use JIRA
+
+“As a developer, I use JIRA to pick up assigned stories, update task status, log work, and track bugs.”
+
+One-Line Answer (Most Important)
+
+“JIRA is an issue-tracking and project management tool used to manage and track software development work.”
+
+

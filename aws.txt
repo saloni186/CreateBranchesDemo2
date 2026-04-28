@@ -1,0 +1,18 @@
+Thanks & Regards,
+Saloni Jaiswal 
+Software Developer
+ThrivesUp Consultancy Services
+Mobile:  9993941783
+Email: salonijaiswal.it@gmail.com
+CAPGAMINY :-$aloniInCap2026
+
+
+job-portal. jar(in s3):-https://myjobportalbuckett.s3.ap-south-1.amazonaws.com/Job_Portal-0.0.1-SNAPSHOT.jar
+ls -l :-find the list of all user.
+java version :- find the java version
+$ sudo su :- swiching to sudo user
+yum install java-1.8.0-openjdk  : istall java in vm
+
+wget <path of jar file> :- download the jar file from the s3
+java -jar<jar file name> :- execute the jar file
+

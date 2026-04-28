@@ -1,0 +1,17 @@
+CI/CD
+------
+
+jenkins :- jenkins is continuesly integration and deployment tool
+1)CI :- biuld code+test code
+2)CD :- build+test+release
+3) jenkins :- with the help of Jenkins we can perform Autometed CI/CD
+4)build=>test->deployment->release :; these things are doe by jenkins pipeline proccess
+5)pipeline :- in jenkins :- pipeline is the group of events and jobs that are interconnected with each ather in sequesnce.
+6) how to setup build pipeline in jenkins :
+	1)step :- chain requered jobs in sequesnce add upstream /downstream
+	2)
+7) we can create jenkin pipeline in two ways :
+	1)using build and deliverypipeleine plugin
+	2)using grrovy scipt in fly(here we use jenkins files)
+	scipted : - write the scipt in side the jenkins
+	declarative :- we create a jenkin file where we write the cript whichis the part of git(source code management)

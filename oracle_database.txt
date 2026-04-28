@@ -1,0 +1,1428 @@
+ 						       ORACLE SQL
+
+1. Oracle database :-
+ 		    1)oracle is a database.
+ 		    2)it is light weighted.
+ 		    3) oracle has many version the latest version is 12c
+ 		    4) we will use 11g-xe
+ 		    5)oracle  is a database in database we have different schemas(tables) based on their objects.
+ 			System                     HR                     core(our own schema)
+ 			un:system              un:hr                            un:core
+ 			PD:admin     	       pw:hr				pd:core
+ 		    6) Oracle gives 7 predifined schema for practicing perpose
+ 		    7) to altered hr :-alter user hr identified by hr account unlock;
+ 		    8)in software developer :-username :-system password :-admin(jo ki oracle database me dala hai)
+ 	   	    9)for core :-create user core identified by core
+ 		    10) oracle data is case sensitive.
+ 		    11) if we perform any operation on null it will return null;
+____________________________________________________________________________________________________________________________________
+
+2. what is database ?
+ans :-data base is used to store data in data base in structral form.
+
+databases :-
+1.oracle
+2.MYSQL// open source
+3.postgreSQl// open source
+4.IBM DB2
+5.Teradata
+6.sybase
+_________________________________________________________________________________________________________________________________
+
+3. what is SQL developer ?
+ans : sql developer is a GUI tool to proccess queries which hits to the database.it does not hold the data. it is just frontend.
+
+oracle database -> sql developer, toad
+mysql server -> mysql server manager
+_______________________________________________________________________________________________________________________________
+
+4.versions of oracle database :-
+oracle 21c// latest
+oracle 19c
+oracle 18c
+oracle 12g
+oracle 11 g
+oracle 9i
+_______________________________________________________________________________________________________________________________
+
+Edition :
+
+1.Enterprize Edition
+2.Express Edition// we use
+3.standard Edition
+________________________________________________________________________________________________________________________________
+
+what is schema ?
+ans :- we can divide our database intto multiple subsets or a logical divition in nothing but schema, oracle databasse have 3 schmea we can devide -System,hr, core
+wwe can create  any number of schema.
+System schma have only access by DBA(database aministator)
+_______________________________________________________________________________________________________________________________
+
+data types :-
+
+Ans :-
+Numeric :
+ 	number(8)         88888888
+ 	number(5,2)       888.88
+ 	number(2,2)       0.88 it will become desimal value
+Date :-
+ 	date           10-march-99
+
+varchar :
+ 	char
+ 	varchar()         depricated now
+ 	varchar2()
+______________________________________________________________________________________________________________________________
+
+            DDL                            DML                        DRL                            TCL                    DCL
+(data defination language)   (data manupulation language)   (data retrieval language)   (transanction control language) (datactllng)
+ 	crate				insert				select                commit			     grant
+ 	drop				delete                                                rollbakc                       revoke
+ 	trancate			update                                                savepoint                  maintan by
+ 	remane			        marge										 DBS
+ 	alter
+
+trancate : table structure will be maintan but all the data of the table will get deleted.trancate we can not rollback;
+drop : completely we delete the table.can not be rollback.
+delete :- delete a particular column which we should delete.we can rollback.
+alter query :-alter table customer add county varcahr2(20)
+VALUES (108, 'neelam', 555555555, 22, 20, 500000, TO_DATE('22/02/2015', 'DD/MM/YYYY'));
+since we have alter we can not rollback;
+if a table contains data you can increse the column length but cant decrese.
+to modify data types :
+alter table customer modify cust_id number(30);
+alter table customer modify mobile varchar2(33); wrong dta type chang nhi kr skte.
+ager table me data hoto hum data type chang nhi kr skte.for chang the datatype we should follow bellow steps :-
+ 		backup the data
+ 		trancate the table
+ 		modify the data
+ 		restore the data
+ 		drop the bachup table
+save point ko phle session me save krna pdta hai.
+make a column primary key : alter table table_name add primary key(id);
+__________________________________________________________________________________________________________________________________
+
+Rename : we can rename a table and we also rename column.
+
+rename column :-alter table customer rename column mobile to mobile_no;
+
+rename table :rename customer to my customer;
+
+change column datatype :-
+_________________________________________________________________________________________________________________________________
+
+savepoint() :-insert into ram values(1,1);
+savepoint a;
+insert into ram values(2,2);
+savepoint b;
+insert into ram values(3,3);
+savepoint c;
+insert into ram values(4,4);
+savepoint d;
+
+rollback to c;
+______________________________________________________________________________________________________________________________
+
+Constraints :- whenever we are inserting the data into table before inserting it into the table we have to validate it , this is nothing but contraints.if it valide then we insert it into the table otherwise we will reject it.
+
+ 	   PK         not_null       unique     check   fk                     PK
+ 	cust_id      cust_name     mobile_no     age   city                  city_id   city_name
+ 	   1            saloni       22222        23    10                     10        indore
+ 	   2            mahi         55555        67    30                     20        mumbai
+ 	   3            shivani      11111        45    20                     30        hydrabad
+ 	   4            bharti       null         34    10                     40        pune
+
+
+delete from candidate where can_id=101;
+delete from city where city_id=11;we can delete parent table record but we can not delete child table record.violated - child record found
+
+on delete cascade :-when we delete child then parent record should be deleted.
+
+query :-delete from city where city_id=12;parent bhi delete ho jayega.
+
+
+1.primary key :-it will not allowed duplacate value, it will not allowed null value, only one primary have on one table.
+Ex: cust_id, std_id....
+
+2.composite key :-
+ 	we can combine the column we can make this column as the combination of the column as promary key this combination we should not get the duplicate ,in order to maintain some history we will go for this composite key
+Ex:-   cust_idobile_no  ------> primary key (cust_id, mobile_no)
+
+insert into candidate values(100,'vaishali',3333333339,23,13); ya to can_id unique honi chahiye ya mobile_no uniuq hona chahiye
+
+CREATE TABLE Candidate (
+    can_id NUMBER(20),
+    can_name VARCHAR2(30) NOT NULL,
+    mobile_no NUMBER(20),
+    age NUMBER(10) CHECK (age < 30),
+    city_id NUMBER(20) REFERENCES city(city_id),
+    PRIMARY KEY (can_id, mobile_no)
+);
+
+3. not null :-
+ 		it will not allowed null value but it will allowed duplicate values
+ 		Ex :-First_name,last_name.
+
+4.uniqe     :-
+ 		it will not allowed duplicate values but it will allowed null value.
+ 		Ex:-mobile_no
+
+5.check  :- we use it for validation.
+            Ex : (check>23)
+
+6.Foreign key :- it represents relationship between two tables.it can allowed duplicate value, it should be primary kay of another 		 table, we can create any number of foreign key in table,
+
+_____________________________________________________________________________________________________________________________
+
+to find all table in HR :
+
+select * from all_tables where owner='hr';
+___________________________________________________________________________________________________________________________
+
+ 			SELECT STATEMENT IN ORACLE
+
+to select some perticuler column :-select can_id,can_name from candidate;
+alias column : it will not change the name of the column physical but tempraraly
+ 		select can_id as associated_id, can_name as candidatename from candidate;
+ 		Ex :-	associated_id         associated_name
+ 			     10                   saloni
+3.cancatination  :-cancat function will take only two arguments.
+ 		select can_id as associated_id,concat(can_name,mobile_no)namemobile,age from candidate;
+ 			associated_id        namemobile          age
+ 			     10              saloni33333          23
+
+ 		select can_id as associated_id,cancat(cancat(can_name,','),mobile_no)
+ 			associated_id         namemobile         age
+ 			     10               saloni,33333        23
+ 		select can_id as associated_id , can_name||','||mobile_no name_mobile,age from candidate
+ 		        associated_id         namemobile         age
+ 			     10               saloni,33333        23
+
+4.Column calculation :-it canculated many numarice value.
+ 
+ 			select can_id,age+20 newCan_age from candidate; stuword mouse
+ 			select can_id+10,age from candidate;
+
+5.print unique data :-
+ 			select distinct can_id, can_name,mobile_no, city_id from candidate;
+
+6.count :-                select count(distinct can_id) from candidate;
+ 			select count(distinct city_id) from candidate;
+
+7.where cluase :- it restricting the data.
+ 			select * from candidate where age>100 and age<200;
+ 			select * from candidate where salary age 100 and 200;
+ 			select * from candidate where salary not between 10000 and 20000;
+
+
+8.IN :-                 select * from candidate where city_id IN(10,20);
+ 			select * from candidate where salary IN(30000,40000,20000);// jo data table me nhi ho usko  ignore krta hai
+ 											mtlb age 30000,40000 ke salary wale ho
+ 											20000 na hoto 2000 ko ignire krke 30000,40000
+ 											wale la kr de dega.
+ 			select * from candidate where age not IN(23,24);
+ 			select * from candidate where can_name IN('saloni','sonal');
+ 			slect * from candidate where can_name not IN('sonal');
+
+9.nested condition :-   select * from candidate whare can_id=102 and salary>=30000;
+ 				102	saloni	3333333333	20	40
+ 				102	saloni	4444444444	20	40
+ 				102	saloni	55555555555	20	40
+ 				105	sonal	4444444444	23	10	30000
+ 				105	sonal	444444447	23	20	30000
+ 				106	sonal	444444447	23	20	40000
+ 
+ 			select * from candidate where can_name='saloni' and(age=20 or city_id=40);
+ 				101	saloni	3333333333	20	40
+ 				102	saloni	3333333333	20	40
+ 				102	saloni	4444444444	20	40
+ 				102	saloni	55555555555	20	40
+
+ 			select * from candidate where can_name='saloni' and(age<25 and salary>20000);
+
+10. rownum/table alias :-select * from candidate where rownum<5;
+ 				101	saloni	3333333333	20	40
+ 				102	saloni	3333333333	20	40
+ 				102	saloni	4444444444	20	40
+ 				102	saloni	55555555555	20	40
+ 
+ 			select rownum,rowID,*from candidate c;
+ 			select rownum.rowid,candidate.* rom candidate;
+
+
+11.is :-                select * from candidate where salary is null;
+ 			select count(* )from candidate where salary is not null;
+ 			select count(*) from candidate where salary is null;
+ 			select count(can_id) from candidate where salary is null;
+ 
+
+12.date  :-            select can_id,hiring_date,to_char(hiring_date,'dd/mm/yyyy'),to_char(hiring_date,'day'),to_char(hiring_date,'month')from candidate;
+ 		       select * from candidate where to_char(hiring_date,'yy')='15';
+ 			select * from candidate where to_char(hiring_date,'mmyyyy')between '022015'and'022015';
+ 			select * from candidate where to_char(hiring_date,'FMday')='monday';
+ 			select * from candidate where to_char(hiring_date,'d')='22';
+
+13. dual(damy table) :- select * from dual;
+ 			select sysdate+10 from dual;
+ 			select current_date from dual;
+ 			select systimestamp from dual;
+
+14.Patturn matching :-
+
+ 			select * from candidate where can_name like 's%'.// print those data where name starts with s.
+ 			select * from candidate where can_name like '%s';// print those data where name ends with s.
+ 			select * from candidate where can_name like '%as%';// as khi aa rha ho
+ 			select * from candidate where can_name like 'S%i';// print the name which starts with S and ends with i.
+ 			select * from candidate where can_name like '____';4(_) pint the name which have 4 character
+ 			select * from candidate where salary like'500000';// print candiate which has 500000 salary
+ 			select * from candidate where salary like '5_____';5(_)print candiate which has 500000 salary
+ 			select * from candidate where can_id like '__2%';2(_)
+ 			102	saloni	3333333333	20	40
+ 			102	saloni	4444444444	20	40
+ 			102	saloni	55555555555	20	40
+
+
+15 .OrderBy cluase :-
+
+ 			select * from candidate order by can_name;// incresing order me name la kr dega
+ 			slect * from candidate order by salry desc;// decresing order me salary lakr dega
+ 			select * from candidate order by can_name,can_id;// agr dono data same ho aur usko decide krna hoto hum , lga 								kr dusra column dedete hai taki vo vha se differenciat kr paye.
+ 			select * from candidate order by can_name,mobile_no,salary,can_id;// sabhi ko one by one check krega fir 										             order me jamayega
+
+ 			select * from candidate order by 2,3,6,1;// column order ke according
+ 			select  * from candidate order by 1 desc,4;
+ 			select can_id,can_name,salary from candidate order by 1,;
+
+
+16. single row function in oracle :-
+ 			select can_name,upper(can_name),lower(can_name),count(can_name),initcap(can_name),reverse(can_name) from            			candidate.
+ 			select can_name from candidate where lower(can_name)='saloni';
+
+17.substr :-
+ 		    substr(string,from_position,no_of_char);
+ 		    sbbstr(string,from_position);  // indexing starts from 1
+ 			select substr('hello saloni , how are you???',6);// saloni how are you???
+ 			select substr('hello saloni , how are you???',6,5);// saloni
+ 			select substr('hello saloni ,how are you???',-10,10)// are you???
+ 			select substr('hello saloni ,how are you???',-10,3)//are agr +num hai to left se counting karega aur ager 										-num hai to left se counting karega no_of_char hmesa
+ 										left se count krega
+
+ 			select can_name,upper(substr(can_name,1,6)) from candidate;
+
+18.INSTR :-
+ 			select instr('CORPORATE WORLD','R',1,2)from dual;1= from first_char,2=second_occurence
+ 			select instr('CORPORATE WORLD','OR'3) from candidate ; from third character first ocurence
+
+19.LPAD :-
+ 		    	select LPAD('@gmail.com',15,'*');
+ 			select RPAD('@gamil.com','15','*');
+ 			select LPAD(age,5,0)from candidate;
+ 			00020
+
+20.LTRIM :-
+ 			select LTRIM('                  SALONI')FROM dual; // saloni
+ 			select RTRIM('SALONI            ')FROM DUAL;// saloni
+ 			select TRIM('  saloni    ')from dual; /saloni
+ 			select LTRIM('0000SALONI00','0');//SALONI00
+
+21.replace :-
+ 			Select replace('aalack','aa','b')from dual;// black
+ 			select replace(salary,'saloni','shivani')from dual;
+ 			select mobile_no,'+91'||replace(mobile_no,'.'null)from candidate;
+
+22.translate :-
+ 			select translate('welcome to abcd','abcd','wxyz')from dual;
+ 			select salary,(salary+10)as new_salary from candidate;
+ 
+
+23.NVL FUNCTIONS :
+ 	NVL             select NVL(2,3)from dual;// 2
+ 			select NVL(null,3)from dual;//3
+ 			select stu_id,stu_name,year_of_study,nvl(math,0),nvl(phy,0),chem,bio,(nvl(math,0)+nvl(phy,0)+chem+bio)								toal_marks,(nvl(math,0)+nvl(phy,0)+chem+bio)/4avg_marks from student;
+
+
+ 	NVL2            select NVL2(2,3,4);//3
+ 			select NVL2(null,3,4)from dual;//4
+ 			select can_id,salary,NVL2(salary,'salary dal di','salary nhi dali')from candidate;
+
+24.round :-
+ 			select round(3.5)from dual;//3
+ 			select round(3.6)from dual;//4
+ 			select round(3456.6759,2)from dual;// 3456.675
+ 			select round(3456.7875,-1)from dual;//3460 (-1=0)
+ 			select round(3456.678,-2)from dual;//3500(-2==00)
+ 			select round(3464.788,-2)from dual;//3500
+
+25.trunc
+ 			select trunc(3456.7764,2);//3456.77
+ 			select trunc(3456.987,-2);// 3400
+
+26.floor and ceil :-
+
+ 			select floor(5.909099999);// 5
+ 			select ceil(5.909099999);//6
+
+27.mod :-                select mod(15,4);// it give reminder
+ 			 select * from candidate where hiring_date,mod(to_char(hiring_date,'yyyy'),4)=0;from candidate;// leap year 														joining emplyees
+
+ 			select to_char(sysdate,'dd/mm/yyyy')from dual;
+ 			select to_char(sysdate,'HH24:MI:SS')FROM DUAL;
+_________________________________________________________________________________________________________________________________
+
+ 					JOINTS
+
+
+more then two tables we can not join.
+there are two types of joints in oracle database
+1)Equi join :-an equi join is type of join that combines tables based on matching values in speciefied column.
+An Equi Join is a type of INNER JOIN where the condition is based on equality (=) between columns of two tables.
+
+2)non-equi join :-the nonequi join is such type of join which match column data from different tables based on an inequality.
+(instead of queal sign like:->,<,=<,=,=>)
+
+there are 4 types of equijoin :-
+1.inner join
+2.left outer join
+3.right outer join
+4.full outer join
+
+ 	cust_id    cust_name    mobile_no  email           country_id                              counrty_id     country_name
+ 	  1000      abc          11111     abd@gmail.com     200                                       200		USA
+ 	  1001	    pqr		 22222	   pqr@gmail.com     202				       201		INDIA
+ 	  1002      xyz          33333	   xyz@gmail.com     204				       202		CHINA
+ 	  1004	    mnl          44444     mnl@gmail.com     205				       203		SINGAPORE
+ 	  1005      def          55555	   def@gmail.com     203				       204		UK
+ 	  1006      ijk		 66666	   ijk@gmail.com     200
+ 	  1007      stu	         77777	   stu@gmail.com     202
+
+1.inner join :- commun record between the two tables.if the record is matching the result will be get itbut if the record in not matching the result not get.
+
+
+ 	 cust_id    cust_name    mobile_no     email        country_id    country_name
+ 	  1000      abc         11111     abd@gmail.com     200            USA
+ 	  1001	    pqr		 22222	   pqr@gmail.com     202           CHINA
+ 	  1002      xyz          33333	   xyz@gmail.com     204            UK
+ 	  1005      def          55555	   def@gmail.com     203	SINGAPORE
+ 	  1006      ijk		 66666	   ijk@gmail.com     200	   USA
+ 	  1007      stu	         77777	   stu@gmail.com     202	  CHINA
+ 
+
+2.Left outer join :-take all record from the left table and take commun record from the right table.
+
+ 	cust_id    cust_name    mobile_no     email         country_id   country_name
+ 	  1000      abc          11111     abd@gmail.com     200            USA
+ 	  1001	    pqr		 22222	   pqr@gmail.com     202	    CHINA
+ 	  1002      xyz          33333	   xyz@gmail.com     204	    UK
+ 	  1004	    mnl          44444     mnl@gmail.com     205	    null
+ 	  1005      def          55555	   def@gmail.com     203	  SINGAPORE
+ 	  1006      ijk		 66666	   ijk@gmail.com     200	    USA
+ 	  1007      stu	         77777	   stu@gmail.com     202	    CHINA
+
+
+3. right outer join :- it will take all the record from right table and commun record from the left table.it is opposite from left outer join.
+
+ 	cust_id    cust_name    mobile_no  email           country_id    country_name
+ 	  1000      abc          11111     abd@gmail.com     200          USA
+ 	  1001	    pqr		 22222	   pqr@gmail.com     202          CHINA
+ 	  1002      xyz          33333	   xyz@gmail.com     204	   UK
+ 	  1004	    mnl          44444     mnl@gmail.com     205	   NULL
+ 	  1005      def          55555	   def@gmail.com     203	SINGAPORE
+ 	  1006      ijk		 66666	   ijk@gmail.com     200           USA
+ 	  1007      stu	         77777	   stu@gmail.com     202           CHINA
+ 	  null      null          null		null	     201           India
+
+
+4. full outer join :- it will get matching non-matching record from both the tables.
+
+ 	cust_id    cust_name    mobile_no  email           country_id    country_name
+ 	  1000      abc          11111     abd@gmail.com     200            USA
+ 	  1001	    pqr		 22222	   pqr@gmail.com     202	    CHINA
+ 	  1002      xyz          33333	   xyz@gmail.com     204	     UK
+ 	  1004	    mnl          44444     mnl@gmail.com     205            null
+ 	  1005      def          55555	   def@gmail.com     203	   SINGAPORE
+ 	  1006      ijk		 66666	   ijk@gmail.com     200	     USA
+ 	  1007      stu	         77777	   stu@gmail.com     202            CHINA
+ 	  null       null         null        null    	     201            INDIA
+
+there are two methods to write join query :-
+
+1.implicite method for inner join
+
+1)inner join :-
+select
+d.dev_id,
+d.dev_name,
+d.mobile_no,
+d.email,
+d.ctry_id,
+c.ctry_name
+from dev d,country c
+where d.ctry_id=c.ctry_id;
+
+2.ANSI method for inner join :-
+
+select
+d.dev_id,
+d.dev_name,
+d.mobile_no,
+d.email,
+d.ctry_id,
+c.ctry_name
+from dev d inner join country c
+on d.ctry_id=c.ctry_id;
+
+_____________________________________________________________________
+
+2)LEFT_OUTER_JOIN :-
+
+1.implicite method :-
+
+select
+d.dev_id,
+d.dev_name,
+d.mobile_no,
+d.email,
+d.ctry_id,
+c.ctry_name
+from dev d,country c
+where d.ctry_id=c.ctry_id(+);
+
+
+2.ANSI :-
+
+select
+d.dev_id,
+d.dev_name,
+d.mobile_no,
+d.email,
+d.ctry_id,
+c.ctry_name
+from dev d left join country c
+on d.ctry_id=c.ctry_id;
+
+output :-
+1006	ijk	6666666666	ijk@gmail.com	200	USA
+1000	abc	1000000000	abc@gmail.com	200	USA
+1001	pqr	1111111111	pqr@gmail.com	201	INDIA
+1005	def	5555555555	def@gmail.com	203	SINGAPORE
+1002	xyz	2222222222	xyz@gmail.com	204	UK
+1007	stu	7777777777	stu@gmail.com	207
+1004	mnl	3333333333	mnl@gmail.com	205
+____________________________________________________________________
+
+3.RIGHT_OUTER_JOIN :-
+
+select
+d.dev_id,
+d.dev_name,
+d.mobile_no,
+d.email,
+d.ctry_id,
+c.ctry_name
+from dev d right join country c
+on d.ctry_id=c.ctry_id;
+__________________________________________________________________________
+
+4. full_outer_join :-
+
+select
+d.dev_id,
+d.dev_name,
+d.mobile_no,
+d.email,
+d.ctry_id,
+c.ctry_name
+from dev d left join country c
+on d.ctry_id=c.ctry_id
+union
+select
+d.dev_id,
+d.dev_name,
+d.mobile_no,
+d.email,
+d.ctry_id,
+c.ctry_name
+from dev d right join country (select ctry_id ,ctry_name from Country) c
+on d.ctry_id=c.ctry_id;
+
+output :-
+
+1000	abc	1000000000	abc@gmail.com	200	USA
+1001	pqr	1111111111	pqr@gmail.com	201	INDIA
+1002	xyz	2222222222	xyz@gmail.com	204	UK
+1004	mnl	3333333333	mnl@gmail.com	205
+1005	def	5555555555	def@gmail.com	203	SINGAPORE
+1006	ijk	6666666666	ijk@gmail.com	200	USA
+1007	stu	7777777777	stu@gmail.com	207    CHINA
+___________________________________________________________________________________________________________________________
+
+cross join or cartesian :-if we dont define the cross condition then it become the cross join.eaning, every row from the first table is combined with every row from the second table.
+It combines every row of Table A with every row of Table B
+
+select
+d.dev_id,
+d.dev_name,
+d.mobile_no,
+d.email,
+d.ctry_id,
+c.ctry_name
+from dev d cross join country c
+--where d.ctry_id=c.ctry_id ;
+
+output :-
+
+1000	abc	1000000000	abc@gmail.com	200	USA
+1000	abc	1000000000	abc@gmail.com	200	INDIA
+1000	abc	1000000000	abc@gmail.com	200	CHINA
+1000	abc	1000000000	abc@gmail.com	200	SINGAPORE
+1000	abc	1000000000	abc@gmail.com	200	UK
+1001	pqr	1111111111	pqr@gmail.com	201	USA
+1001	pqr	1111111111	pqr@gmail.com	201	INDIA
+___________________________________________________________________________________________________________________
+
+self_join :-A self join in SQL is a regular join where a table is joined with itself. It's used when you want to compare rows within the same table.
+
+select
+e1.employee_id,e1.employee_name,
+'reports to'
+e2.employee_id,e2.employee_name
+from employees e1,employees e2
+where e1.manager_id=e2.employee_id order by 1;
+_______________________________________________________________________________________________________________________________
+
+non-equi join :-A Non-Equi Join is a type of SQL join where the join condition does not use the equal sign (=).
+Instead, it uses other comparison operators like:
+Ex :->, <, >=, <=, !=, BETWEEN
+
+select
+e.employee_id,
+e.first_name,
+d.department_id,
+d.department_name
+from employees e,departments d
+where e.department_id!=d.department_id order by 1;
+______________________________________________________________________________________________________________________________
+
+ 				Aggregate functions in oracle
+
+
+Jab aapke paas kisi table mein bar-bar repeat hone wale data ho (jaise ek hi customer ne kai baar order kiya), aur aap us repeat data ko ek group bana ke dekhna chahein — tab GROUP BY use hota hai.
+
+aggrigate function:-aggrigate function is used to perform operation on multiple rows and return single valuse as result, it has give multiple functions like count();from count row in table, sum() for calculate sum of all valuse for a perticuler column ens so on,
+
+1.aggregate function work on column level not row level.
+2. aggregate function will not aggregate the null values.
+3. group by means  ek periculer chij ko ek hi bar ginta hai.
+4. having cluase filter out the group by result.
+5.order of sql queris in oracle
+ 	from
+ 	where
+ 	group by
+ 	having
+ 	order by
+
+min()
+max()
+avg()
+count()
+ SELECT COUNT(*) FROMusers;-- Counts all rows
+ SELECT COUNT(email) FROM users;-- Counts only rows where 'email' is not NULL
+sum()
+ 	select round(avg(math)) from student;
+ 	select max(phy)from student;
+ 	select year_of_study max(math) from student group by year_of_study;
+ 	select stu_name,max(math) from student;// error we can not select non aggregate column along with agrregate column;
+ 	select count(stu_id) from student group by year_of_study;
+ 	select first_name,avg(salary),count(*) from student group by stu_id;
+ 	select * from employees where salary=(select max(salary) from employees);
+ 	select department_id ,sum(salary),count(department_id),round(avg(salary),2) from employees group by department_id;
+ 	select department_id ,sum(salary),count(department_id),round(avg(salary),2) from employees group by department_id HAVING sum(salary)>25000;
+ 	select department_name,manager_id,count(employee_id)from employees group by manager_id;
+
+ 	select e.department_id,d.department_name ,sum(salary)
+ 	from employees e,departments d
+ 	where e.department_id=d.department_id
+ 	group by e.department_id,d.department_name
+ 	HAVING sum(salary)>25000;
+
+q.1 find total no. of emp in each country;
+select country,count(*) from emp group by country;
+
+2)find the cities where more then 3 emp are working in india ?
+select city,count(*) from emp where country='india' group by city having count(*)>1;
+
+3)in which skilled hightest no. of employee are working ?
+ans :- select, count(*) from emp order by skilled having count(*)>1;
+
+4)there is any emp with same name ?
+select emp_name,count(*) from  myemployee GROUP BY emp_name HAVING count(*)>1;
+
+4)find youngest emp;
+select * from myemployee where dob=(select max(dob)from myemployee);
+
+5)find oldest emp;
+select * from myemployee where dob=(select min(dob)from myemployee);
+
+what is the difference betwwen order by and group by ?
+group by :-when we are doing the aggrigate function then we go for the group by cuolumn
+ order by  :- when we are doing sorting algorithum then we should go for order by.
+____________________________________________________________________________________________________________________________________
+
+ 				sub queris in oracle
+
+1.writing select staement inside select statement is called sub queris
+select   (select);
+outer       sub
+
+2. inner queri will be executed first then the inner queri executed.
+3.insert(select);
+  update(select);
+  delete(select);
+the inner queri will be select statement.
+
+5. typs of sub queris :
+single sub query
+multi column sub query
+multi row sub query
+co -related sub query
+
+1.single sub query :-whenever we are writing sub queris the inner query should return only one row.
+
+select (operator)(select)
+
+ 	=
+ 	!= <>
+ 	<
+ 	<=
+ 	>
+ 	>=
+
+without sub query :- find maximun salary
+inner :-select * from employee where salary=9999(highest)
+
+sub query :-select * from employee=(select max(salary from employee));
+
+que:-more then avrage of salary
+select * from myemployee where salary>(select avg(salary) from myemployee);
+ 	ye pura data lata hai            ye perticuler department lata hai
+2. multi row sub query /multi column sub query:whenever we are writing sub queris the inner query returns more then one row.it will return multiple columns and multipe rows.
+
+IN
+NOT IN
+>ANY
+<ANY
+<ALL
+>ALL
+
+Example :-SELECT * from employees where (department_id,salary) IN(select department_id,max(salary) from employees GROUP by 	  	  department_id)order by employees.department_id;
+Example :-select * from employees where department_id>ANY(30,60,90) order by department_id;// 90ke upr ka sara data dede ga
+
+Example :-select * from employees where department_id<ANY (30,60,90)order by department_id;// 90 ke neeche ka sara data dedega
+
+Example :-select * from employees where department_id>ALL(30,60,90)order by department_id;// sirf 30 ke upr ka data
+Example :-select * from employees where department_id<ALL (30,60,90)order by department_id;//sirf 30 ke neeche ka
+
+q. how employee job is same as same as stephen job;
+select * from employees where job_id=(select job_id from employees where first_name='Stephen');
+
+Example :-multi row column query
+ 	select * from employees where job_id IN(select distinct job_id from employees where  first_name='Steven');
+
+q.who salary is more than the max salary of the job is 'Salas_Manager'?
+select * from employees where salary>(select max(salary) from employees where job_id=(salect job_id from jobs where job_title='Sales Manager'));
+
+q.whose employee job is the same as job of Ellen and who are earning salary  more then Ellen salary?
+(select * from employees where job_id=select job_id from employees where first_name='Ellen' and salary>(select salry from employee table where first_name='Ellen'));
+
+q.desplay senior employee among the all employee ?
+select * from employees where hire_date=(select min(hire_date)from employees);
+
+q. find the second highest salary from the employees table;
+select * from employees where salary=(
+select max(salary) from employees where salary<(select max(salary) from  employees));
+
+q.select department where no employees are working ?
+
+ans :-
+
+
+
+3.co-related sub_query :-for every one record it executes the inner quesry.
+_____________________________________________________________________________________________________________________________________
+
+how can we deleted duplicate records ?
+
+select max(rowid) from employees group by employee_id;
+delete  from employees where rowid not in(select max(rowid) from employees group by employee_id);
+_____________________________________________________________________________________________________________________________________
+
+ 				SET OPERATORS
+
+whenever we have same stucture table and if we want to cobine the row level data then i will go for set operators.
+column name might be different but clumn data type sholud be match
+
+1.union:- it will removes duplicates.
+2.union all :- it will not remove duplicate recoreds, it will faster
+3.intersect:- commun recoreds between bhot the tables.
+4.minus:- differences
+
+ 	A       B       AUB	A UA B    A INTERSECT B            A-B       B-A
+ 	1	1	1	  1		1		    1	      6
+ 	3	4	3	  1		4		    3	      10
+ 	4	4	4	  3		8		    5	      12
+ 	5	6	5         4		13		    9
+ 	8	8	6         4
+ 	9	10	8         4
+ 	11	12	9	  5
+ 	13	13	10        6
+ 		11                8
+ 			12        8
+ 			13
+
+CUSTMER_1:-10001	ARUN	1111111111	CHAINNAI
+ 	   10002	BALA	2222222222	HYD
+ 	   10003	RAKESH	3333333333	CHAINNAI
+ 	   10001	ARUN	1111111111	CHAINNAI
+
+CUSTMER_2 :-10001	ARUN	1111111111	CHAINNAI
+ 	    10003	RAKESH	3333333333	CHAINNAI
+ 	    10005	SANJAY	5555555555	PUNE
+ 	    10004	JOHN	4444444444	HYD
+
+
+# select * from custmer_1
+  union
+  select * from custmer_2;
+it will give both record but not gives duplicates.
+ 	10001	ARUN	1111111111	CHAINNAI
+ 	10002	BALA	2222222222	HYD
+ 	10003	RAKESH	3333333333	CHAINNAI
+ 	10004	JOHN	4444444444	HYD
+ 	10005	SANJAY	5555555555	PUNE
+
+# SELECT * FROM CUSTMER_1
+  UNION ALL
+  SELECT * FROM CUSTMER_2;
+ 	it gives duplicate records also
+ 	10001	ARUN	1111111111	CHAINNAI
+ 	10002	BALA	2222222222	HYD
+ 	10003	RAKESH	3333333333	CHAINNAI
+ 	10001	ARUN	1111111111	CHAINNAI
+ 	10001	ARUN	1111111111	CHAINNAI
+ 	10003	RAKESH	3333333333	CHAINNAI
+ 	10005	SANJAY	5555555555	PUNE
+ 	10004	JOHN	4444444444	HYD
+
+# SELECT * FROM CUSTMER_1
+  UNION ALL
+  SELECT * FROM CUSTMER_2;
+ 	it will give common record from both the tables, common full row.
+ 	10001	ARUN	1111111111	CHAINNAI
+ 	10003	RAKESH	3333333333	CHAINNAI
+
+# SELECT * FROM CUSTMER_1
+  minus
+  SELECT * FROM CUSTMER_2;
+ 	it will minus the common records from table CUSTMER_1
+ 	10002	BALA	2222222222	HYD
+
+# SELECT * FROM CUSTMER_2
+  minus
+  SELECT * FROM CUSTMER_1;
+ 	it will minus the common records from table CUSTMER_2
+ 	10004	JOHN	4444444444	HYD
+ 	10005	SANJAY	5555555555	PUNE
+
+# have one extra column in one table
+ 	SELECT cust_id,cust_name,mobile_no,city ,COUNRTY FROM CUSTMER_1
+ 	union
+ 	SELECT cust_id,cust_name,mobile_no,city, null as COUNRTY FROM CUSTMER_2;
+
+Q. when we will go for SET and when we will go for UNION ?
+ANS :-if we have same structure table, and we want to marge the rows then we should go with SET,column level
+      if we have two different tables but we have one commen collumns then we should go for joints.row level
+________________________________________________________________________________________________________________________________
+
+ 			       	ANALITICAL FUNCTIONS OR WINDOW FUNCTIONS IN ORACLE
+
+# in analitical function group by= partiton by
+
+1.Rank()
+ 	:-RANK() gives same rank to equal values.But it skips the next rank(s)
+ 	[Rank() over(partition by group_column order by ranking_column asc/desc)]after a tie.at first group by then give rank
+
+2.Dense_Rank()
+ 	     :-DENSE_RANK() is a window function in Oracle SQL that assigns ranks to rows, similar to RANK(), but without skipping 		ranks when there are ties.
+ 	[Dense_Rank()  over(order by ranking_column asc/desc)]
+
+3.Row_number()
+4.Lead()
+5.Lag()
+
+
+ 	Salary                          salary         Rank()       Dense_Rank()     Row_Number()
+ 	50000				60000		1		1		1
+ 	12000				50000		2		2		2
+ 	40000				45000		3		3		3
+ 	20000				40000		4		4		4
+ 	15000				40000		4		4		5
+ 	20000				35000		6		5		6
+ 	35000				32000		7		6		7
+ 	32000				20000		8		7		8
+ 	20000				20000		8		7		9
+ 	12000				20000		8		7		10
+ 	60000				15000		11		8		11
+ 	45000				12000		12		9		12
+ 	40000				12000		12		9		13
+
+select emp_id,emp_name,salary,sum(salary) over() from employees;
+select emp_id.emp_name,salary,sum(salary)over(partition by department_id),sum(salary)over();
+
+Rank():-select employee_id,first_name,salary,department_id,Rank()over(order by salary)rank_of_salary from employees;
+
+1	saloni	60	60	1
+132	TJ	2100	50	2
+136	Hazel	2200	50	3
+128	Steven	2200	50	3
+127	James	2400	50	5
+135	Ki	2400	50	5
+119	Karen	2500	30	7
+
+Dense_Rank() :-select employee_id,first_name,salary,department_id,Rank()over(order by salary)dense_rank_of_salary from employees;
+1	saloni	60	60	1
+132	TJ	2100	50	2
+136	Hazel	2200	50	3
+128	Steven	2200	50	3
+127	James	2400	50	4
+135	Ki	2400	50	4
+119	Karen	2500	30	5
+
+row_number():-select employee_id,first_name,salary,department_id,row_number()over(order by salary)row_number_of_salary from employees;
+
+1	saloni	60	60	1
+132	TJ	2100	50	2
+136	Hazel	2200	50	3
+128	Steven	2200	50	4
+127	James	2400	50	5
+135	Ki	2400	50	6
+119	Karen	2500	30	7
+144	Peter	2500	50	8
+182	Martha	2500	50	9
+
+select employee_id,first_name,salary,department_id,Rank()over(partition by department_id order by salary)rnk from employees;
+
+200	Jennifer	4400	10	1
+202	Pat	        6000	20	1
+201	Michael	        13000	20	2
+119	Karen	        2500	30	1
+118	Guy	        2600	30	2
+117	Sigal	        2800	30	3
+116	Shelli	        2900	30	4
+115	Alexander	3100	30	5
+114	Den	        11000	30	6
+
+select * from (select emp_id,first_name,salary,department_id,Rank()over(order by salary)rank from employees)where rank<5;
+100	Steven	24000	90	1
+101	Neena	17000	90	2
+102	Lex	17000	90	2
+145	John	14000	80	3
+146	Karen	13500	80	4
+
+secend highest salaried employees.
+
+select * from (select *,Rank()over(order by salary)rnk from employees)where rnk=2;
+select * from(select employee_id,first_name,salary,department_id,RANK()over(partition by department_id order by salary desc)rnk from employees)WHERE rnk=2;
+202	Pat	6000	20	2
+115	Alexander	3100	30	2
+120	Matthew	8000	50	2
+
+top salaried employee from every department:-
+select * from(select emp_id,first_name,salary,department_id,Rank()over(partition by department_id order by salary desc)rnk from employees) where rnk=1;
+
+top salaried employee from every department and department_name by using inner join :-
+select e.*,d.department_name from(select employee_id,first_name,salary,department_id,RANK()over(order by salary desc)rnk from employees)e inner join departments d on e.department_id=d.department_id WHERE rnk<=5 order by rnk;
+
+After =lead
+before=lag
+
+select department_id,first_name,salary,department_id,lead(hire_date)over(order by hire_date)hire_Date,lead(hire_date)over(order by hire_date)hire_date from employees;
+____________________________________________________________________________________________________________________________________
+
+ 					Views in Oracle
+
+Oracle SQL (ya kisi bhi RDBMS) me VIEW ek virtual table hoti hai. Iska matlab hai:
+
+View ek stored SELECT query hoti hai.
+
+Ye actual data store nahi karti, balki jab aap view ko query karte ho to uske peeche wali SELECT query run hoti hai.
+
+Views ka use data ko simplify karne, reuse karne, aur security ke liye hota hai.
+
+🔹 View Kya Hai – Simple Definition:
+
+View ek logical table hai jo ek SQL SELECT query ke result ko represent karta hai.
+
+Ye table physical data store nahi karti, balki har baar jab aap use query karte ho, to wo SELECT query dobara chalti hai.
+we can create multiple view for single table.
+view is nothing but vartual table.
+the view is nothing but simply a from select statement.
+only view defination will be stored.
+
+create or replace view employees_V as select employee_id,first_name,LAST_NAME,EMAIL,PHONE_NUMBER,HIRE_DATE,JOB_ID,SALARY,COMMISSION_PCT,MANAGER_ID,department_id from hr.employees where department_id IN (30,60,90)with read ONLY;
+if our statement is read onlt then we can not insert data.
+error :cannot perform a DML operation on a read-only view.
+
+simple view :-you taking the data from sinlge table
+
+create view :-create view employees_V as select employee_id,first_name,department_id from hr.employees where department_id IN (30,60,90);
+
+Employees_V ke sath sath physical table me bhi changes honge.
+
+a view contains no data.
+it hides implementation complexcity.
+
+we can creating a view on top of view :-create or replace view Employees_v2 as select * from Employees_v where department_id=60;
+
+what is complex view ?
+ans :- creating the view by combinig more then one table.like join, directly wr can not insert  or update the data.
+
+to get all views :-select * from all_views where owner='hr';
+TO GET  view defination :-select text from all_views where owner='HR' and view_name='Employees_V';
+
+row_id is always same because the row the is coming from base table like-Emplyees ->employees_V -> employees_v2
+
+
+Normal views :-
+
+create or replace view <view-name> as select <any valid select query>
+
+read only view :-create or select view <view name> as select<any valid select query> with read only;
+
+view definaition :desc <view name>
+
+INline_view :- it is not created by developer it is handled by the system.
+
+Materialized view :- we are creating a physical copy of view.used foe reporting perpose.if we perfoem any operation on materialized view it will not perform any changes on physical table.
+
+what is the key preserved table ?
+when we join 2 tables , the which contains key columns is called preserved table.
+_____________________________________________________________________________________________________________________________________
+
+ 						Indexing in oracle
+
+with the help of indexing we can retrivel data from the database very fastly
+esch and every record it will go and check and then it will find tis records are available or not is called full table check.it will create performance essiue
+3. indexing is one of the performance tuning method.
+index: index is the seperate object in the database we do have it will take the data, it is used to seeach the row in the database.
+there are two types of index :-
+unique index :-when we create a clumn with primary key the index is autometically created progrramer does not responsible for crreate unique index it will created by database itself.
+non-unique indexing :-if we are not creating primary column in table this is nothing but nin-unique index.we are creating non- unique index.
+composite index:-n if we are creating indexing  by creating more then one column this is called composite index.
+function based index - when we prform operations.
+how to create index :-create index idx_emp_sal on EMPLOYEES(salary)
+some queries:-
+1.select * from all_indexes where owner='hr' and table_name='employees';
+2.select * from  all_ind_columns WHERE index_owner='HR' AND TABLE_NAME='EMPLOYEES';
+
+6. there are mainly 2 indexes:
+b-tree index/ normal index:-IT IS balanced index.,if we have unique valuse then we should go for b- tree index,it is creates by default when we create index like create index salary_idx where owner='hr'and table_name='employees';
+bitmap index:-we have to create it manualy:-create bitmap index sal_ind where owner='HR' AND TABLE_NAME='EMPLOYEES'. when you have repeaded index.
+cardinality :-
+ 		cardinality=no of distinct record / total no of records;
+ 		employee_id,email -> high cardianlity
+ 		job_id,department_id
+ 		car=10/100=0.1    -> less cardinality
+ 		if we have lesscardinality then we should go with bitmap index
+
+bit map index:- whenever we have very less cordinality we will go with bit map index.we do not have privileges to create bitmap index.if we have repeated values then we will go with bitmap index
+
+reverse key_index:-create index <index_name> on employees(salary) reverse;
+
+____________________________________________________________________________________________________________________________________
+
+ 				merge statement in oracle
+
+
+merge operation is use to merge the data from one table to another table.
+2. if the data is not present in target table then we inser the data into target table.if the data is present in the target table then we perform delete and update operation.
+
+query for merge :-
+merge into target
+using source
+on (condition)
+when not matched then 
+inser into target
+when matched then 
+update/delete;
+
+1.MERGE INTO t_customer t
+USING s_customer s
+ON (s.cust_id = t.cust_id)
+WHEN NOT MATCHED THEN
+  INSERT (cust_id, cust_name, mobile, address, email, dob)
+  VALUES (s.cust_id, s.cust_name, s.mobile, s.address, s.email, s.dob)
+WHEN MATCHED THEN
+  UPDATE SET
+    t.cust_name = s.cust_name,
+    t.mobile    = s.mobile,
+    t.address   = s.address,
+    t.email     = s.email,
+    t.dob       = s.dob;
+
+2.
+MERGE INTO t_customer t
+USING (select  * from s_customer
+    minus
+    select * from t_customer)s
+ON (s.cust_id = t.cust_id)
+WHEN NOT MATCHED THEN
+  INSERT (cust_id, cust_name, mobile, address, email, dob)
+  VALUES (s.cust_id, s.cust_name, s.mobile, s.address, s.email, s.dob)
+WHEN MATCHED THEN
+  UPDATE SET
+    t.cust_name = s.cust_name,
+    t.mobile    = s.mobile,
+    t.address   = s.address,
+    t.email     = s.email,
+    t.dob       = s.dob;
+
+3. for delete :-
+MERGE INTO t_customer t
+USING (select  * from s_customer
+    minus
+    select * from t_customer)s
+ON (s.cust_id = t.cust_id)
+WHEN NOT MATCHED THEN
+  INSERT (cust_id, cust_name, mobile, address, email, dob)
+  VALUES (s.cust_id, s.cust_name, s.mobile, s.address, s.email, s.dob)
+WHEN MATCHED THEN
+  UPDATE SET
+    t.cust_name = s.cust_name,
+    t.mobile    = s.mobile,
+    t.address   = s.address,
+    t.email     = s.email,
+    t.dob       = s.dob
+delete where s.cust_id!=t.cust_id;
+
+4. jav data sorce table me present na hoto target table me bhi delete ho jaye :-
+
+MERGE INTO t_customer t
+USING (select nvl(s.cust_id,t.cust_id)as cust_id,s.cust_name,s.mobile,s.address,s.email,s.dob from t_customer t full OUTER JOIN s_customer s on  s.cust_id=t.cust_id) s
+ON (s.cust_id = t.cust_id)
+WHEN NOT MATCHED THEN
+  INSERT (cust_id, cust_name, mobile, address, email, dob)
+  VALUES (s.cust_id, s.cust_name, s.mobile, s.address, s.email, s.dob)
+WHEN MATCHED THEN
+  UPDATE SET
+    t.cust_name = s.cust_name,
+    t.mobile    = s.mobile,
+    t.address   = s.address,
+    t.email     = s.email,
+    t.dob       = s.dob
+delete where s.cust_name is null;
+____________________________________________________________________________________________________________________________________
+
+			Reguler expression in oracle
+
+1)ab*:- a followed by zero or more accurence of b. EX :-a ab abbb abb...
+2)ab+:- a followed by one or more occurence of b. Ex:-ab abb abbb...
+3)ab?:-a followed by zero or one occurence.Ex:-a ab
+4)ab{n}:-n times of preciding character,a followed by  times of b. Ex:-ab{2}=abb,ab{1}=ab
+5)ab{m,n}:-ab{3,4}->abbb abbbb(min limit=3,max limit=4)
+6)ab{m,}:-ab{3,}->abbb abbbb abbbbb..
+7)ab.:-apbr(a and b ke bech me nya single line character aa skta hai)
+8)match any character--DOT-a.b:-acb a&b ()[a and b ke bich me koi sa bhi charater likh skte hai]
+9)one or more--plus :- a aa aaa
+10)zero or one-? ab?c abc ac
+11)zero or more--star :-ab*c->ac abc abbc abbbc
+12)interval--exact count ->a{5} aaaaa
+13)interval--atleast count ->a{3,}  aaa aaaa aaaaa..(atleast 3 times)
+14)interval--between count ->a{3,4} aaa aaaa 
+15)matching character list :-[abc][a-b][a-z]->seaech a z any character ->at bet cet
+16)not matching character list :-[^abc][^a-i]:-abc ko chhor ke sab chlega abcgef gif, abcdefghi nhi chlega
+
+select regexp_replace('a ab abbb abbbb abbbbb','ab*','nic') from dual;->nic nic nic nic nic
+select regexp_replace('a ab abbb abbbb abbbbb','ab+','nic') from dual;->a nic nic nic nic
+select regexp_replace('a ab abbb abbbb abbbbb','ab?','nic') from dual;->nic nic nicbb nicbbb nicbbbb
+select regexp_replace('a a a ab abbb abbbb abbbbb','ab{3}','nic') from dual;a a a ab nic nicb nicbb
+select * from  employees where REGEXP_LIKE(first_name,'Z','i');case insensitive
+select first_name from  employees where REGEXP_LIKE(first_name,'^A(*)');name starts with A
+select first_name from  employees where REGEXP_LIKE(first_name,'(*)on$');ends with os
+select first_name from  employees where REGEXP_LIKE(first_name,'^A');starts with A
+select first_name from  employees where REGEXP_LIKE(first_name,'es$|er$','i');ending with es er
+select first_name from  employees where REGEXP_LIKE(first_name,'[za]');name jisme z aye ya a aye
+select first_name from  employees where REGEXP_LIKE(first_name,'[^za]');other then  a and z print nam
+select first_name from  employees where REGEXP_LIKE(first_name,'[BEZ]');name jisme b e z ho print kr
+select first_name from  employees where REGEXP_LIKE(first_name,'[x-z]');jisme x se z tk ka koi sa bhi character aye
+select first_name from  employees where REGEXP_LIKE(first_name,'[h-k]a');name any character h to a followed by a.
+select first_name from  employees where REGEXP_LIKE(first_name,'[h-k].[b]');h se lekr K ke ka koi character and b ke beech ek koi charcter aye ->Kimberely
+select first_name from  employees where REGEXP_LIKE(first_name,'[h-k]..[b]');h se lekr K ke bich me koi charcter and  b ke bich me koi 2 character aye.->Elizabeth
+select first_name from  employees where REGEXP_LIKE(first_name,'[ee]{2}');
+select regexp_replace('oracle and Oracle','O....e','Oracle DB') from dual;->oracle and Oracle DB
+select regexp_replace('+9 +99 +99 is type of phone no','\d','6') from dual;+6 +66 +66 is type of phone no
+select regexp_replace('+9 +99 +99882 is type of phone no','(\d)(\d)','6') from dual;select regexp_replace('+9 +99 +99882 is type of phone no','(\d)(\d)','6') from dual;
+select regexp_replace('Hello $#,&^  nic it Acadamey $#,,,534546','[^a-z_A-Z 0-9 ]') from dual;en sb ko lena baki sb ko delit kr dena
+Hello   nic it Acadamey 54564563 09 
+select regexp_replace('Hello $#,&^  nic it Acadamey $#,,,54564563 0-9','[a-z_A-Z 0-9 ]') from dual;->$#,&^$#,,,-
+select regexp_replace('hello n      saloni    how are     you','(){2,}','') from dual;->hello n      saloni    how are     you
+select regexp_instr('hello saloni, kesi ho ,tum',',')from dual;13
+_______________________________________________________________________________________________________________________
+
+				performance tuning in oracle 
+
+FACT TABLES -TB
+Explain plan-cost
+collect state
+hints
+optimizer
+partitioning-1(in enterprize edition)
+________________________________________
+
+Explain plan :-
+1)join methods for each table :nested join, hash join -faster join,sort merge join
+2)Access method for each table: full table scan
+3)data operations like-sort,filter,aggrigation.
+					Partition in Oracle
+_____________________________________________________________________________________________________________________________________
+
+Questions :-
+1.max length of table name:-128 byte
+2. in PL_SQL declare recored :-%ROWTYPE %TYPE
+3 can we delete the column with data :-yes
+4. composite datatypes:-recoreds and collections.
+5. implicite cursor attributes :-%found,%notfound,%rowcount
+6.smallest unit of storage in oracle database :-data block
+
+7. what is the diff between inner join and natural join ?
+ans:-Inner join:-inner join returns common row from both the tables based on a spesified condition.in inner join we have to write on cluse to define condition.
+Natural join :-natural join aotometically joins all the columns of both the table with the same name and compatible data type, does not requires join condition, data itself handle it.
+
+8. what is trigger ?
+ans :-A trigger is a special type of stored program that autometically executes when a specific event occure on the table like :insert ,update ,delete.
+
+query:-
+CREATE OR REPLACE TRIGGER after_ouremployees_insert
+AFTER INSERT
+ON ouremployees
+FOR EACH ROW
+BEGIN
+    INSERT INTO employee_logs(emp_id, action_type, action_time)
+    VALUES (:NEW.emp_id, 'INSERT', SYSDATE);
+END;
+/
+use:-1)Maintain Data Integrity
+2)AutomateProcesses
+
+disadvantage :-slow down the performance.
+_________________________________________________________________________________________________________________________________
+
+9.What is a Stored Procedure ?
+A Stored Procedure is a set of SQL statements that are stored in the database and can be executed later by calling it by name."
+
+🧠 Tu isey aise samajh:
+
+Stored Procedure = Ek baar likho, baar-baar use karo.
+CREATE TABLE DEVELOPER (
+
+id number(2) primary key,
+
+name VARCHAR2(10),
+
+salary number(10)
+) ;
+
+create or REPLACE PROCEDURE  dev_procedure(
+
+d_id in number,
+d_name in varchar2,
+d_salary in number
+
+)
+is
+
+begin
+insert into DEVELOPER(id,name,salary)
+values(d_id,d_name,d_salary);
+
+dbms_output.put_line('data inserted successfully in developer table');
+
+EXCEPTION
+
+when others then
+
+dbms_output.put_line('Error '|| SQLERRM);
+
+end;
+/
+SET SERVEROUTPUT ON;
+
+
+ EXEC dev_procedure(10,'SALONI',20000); 
+ 
+ select * from developer;SET SERVEROUTPUT ON;
+EXEC student_data;
+use:-1)Reusability
+2)Performance
+_______________________________________________________________________________________________________________________________
+
+10.what is cursor in oracle ?
+ans:-a cursor is use to rerive data from the database row by row.
+there are two types of cursors :-
+implecute cursor:-it is autometically created by oracle whern single SQL statement like(select ,insert ,delete,update) is executed.
+explicite cursor:-it is create by programmer when we want to fatch multiple row from database.
+
+implicite corsur:-
+
+select * from employees;
+select * from departments;
+
+set SERVEROUTPUT ON;
+
+BEGIN
+FOR emp_data IN(
+
+select employee_id,first_name,salary 
+from employees
+where department_id=60
+)loop
+    DBMS_OUTPUT.PUT_LINE('emp_id : '|| emp_data.employee_id  || ' first_name  :'||emp_data.first_name  || 'salary : '|| emp_data.salary);
+
+end loop;
+end;
+___________________________________________________________________________________________________________________________________
+
+what is the difference between where and having cluase ?
+where :-it is used to filter row before grouping.it cannot use aggrigate function.
+having :-it is used to filter rows after grouping and it can use aggrigate function.
+Ex:- select department_id.couunt(*)
+     from employees 
+     where salary>3000 
+     groupBy department_id 
+     having count(*)>5 
+     order by department_id;
+
+WHERE vs HAVING — Samajh le bhai!
+Feature	           WHERE	             HAVING
+Kab use hota?	GROUP BY se pehle	GROUP BY ke baad
+Kis pe kaam karta hai?	Rows	Groups
+Aggregate function chalta?	❌ Nahi	✅ Haan
+Example	WHERE salary > 50000	HAVING AVG(salary) > 45000
+_________________________________________________________________________________________________________________________________
+
+						cluases
+
+1.group By:-Same type ke data ko ek group me rakhna, aur us group pe calculation (jaise COUNT, SUM, AVG, etc.) karna.
+	SELECT column_name, AGGREGATE_FUNCTION(column_name)
+FROM table_name
+GROUP BY column_name;
+SELECT department_id, COUNT(*) AS total_employees
+FROM employees
+GROUP BY department_id;
+
+1)Count of employees in each department
+
+select department_id,count(*)
+from employees
+GROUP BY department_id;
+
+GROUP BY department_id: Sabhi employees ko unke department ke hisaab se group karega
+
+COUNT(*): Har group me kitne employees hain, yeh batayega
+
+
+2)Average salary per department
+select department_id,avg(salary)
+from employees
+group by department_id;
+
+2.Having cluase :-HAVING clause use hota hai GROUP BY ke baad groups ko filter karne ke liye.
+Isme hum aggregate functions (jaise SUM(), AVG(), COUNT()) use kar sakte hain — WHERE me nahi.
+
+
+Show only those departments where more than 2 employees work
+seletc department_id,count(*)
+from employees
+group by department_id
+having count(*)>2;
+
+2.Show departments where avg salary is more than 45000
+select department_id
+select department_id,avg(salary)
+from employees
+GROUP BY department_id HAVING avg(salary)>4500;
+__________________________________________________________________________________________________________________________________
+
+what is indexing in sql?
+ans :-with the help of indexing we can fatch the data from detabase fastly,instead of scaning entire table row one by one, indexing allw us to jump relavent row directly, it will hepl us to improve the performance and reduce execution time.
+
+there are two types of indexing :-
+1)single column index :- when we apply indexing on one column.
+	create index index_name on table_name(column_name)
+
+2)composite indexing :-when indexing based on multiple columns.
+	create index index_name on table_name(colum1,column2)
+
+3)unique index :- it prevents duplicate values in the index column.
+	create unique index index_name on table_name(column_name) 
+
+where we should not use indexing :-
+1) on small tables,
+2) when table columns does not hold more duplicate data.
+
+ex :-CREATE TABLE Employees (
+    EmployeeID INT,
+    Name VARCHAR(100),
+    DepartmentID INT
+);
+
+-- Create an index on DepartmentID
+CREATE INDEX idx_dept ON Employees(DepartmentID);
+__________________________________________________________________________________________________________________________________
+
+ How can you identify which indexes are being used in a query?
+ans :- To identify which indexes are being used in a query, you can use query execution plans provided by most
+       relational databases
+
+1. 1. Using EXPLAIN or EXPLAINPLAN :-
+	a)EXPLAIN PLAIN FOR
+	select * from employees where department_id=60; explained
+	2)select * from table(DBMC_XPLAN.DISPLAY);
+   -------------------------------------------------------------------------------------------------
+| Id  | Operation                   | Name              | Rows  | Bytes | Cost (%CPU)| Time     |
+-------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT            |                   |     5 |   345 |     2   (0)| 00:00:01 |
+|   1 |  TABLE ACCESS BY INDEX ROWID| EMPLOYEES         |     5 |   345 |     2   (0)| 00:00:01 |
+|*  2 |   INDEX RANGE SCAN          | EMP_DEPARTMENT_IX |     5 |       |     1   (0)| 00:00:01 |
+-------------------------------------------------------------------------------------------------
+INDEX RANGE SCAN: Shows that Oracle used the index.
+
+IDX_DEPTID: The index name used.
+
+If you see TABLE ACCESS FULL, then no index was used.
+
+2.using AUTOTRACE
+	SET AUTOTRACE ON;
+	select * from employees where department_id=60;
+_________________________________________________________________________________________________________________________________
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
